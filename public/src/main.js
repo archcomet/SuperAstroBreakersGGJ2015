@@ -10,26 +10,38 @@
             'stats': 'libs/stats',
             'three': 'libs/three',
             'systems': 'app/systems',
-            'components': 'app/components'
+            'components': 'app/components',
+            'box2d': 'libs/Box2dWeb-2.1.a.3'
         },
 
         shim: {
             'stats': { exports: 'Stats' },
-            'three': { exports: 'THREE' }
+            'three': { exports: 'THREE' },
+            'box2d': { exports: 'Box2D' }
         }
     });
 
     require([
         'cog',
+        'gameConfig',
         'stats',
         'systems/threeRenderSystem',
         'systems/inputSystem',
+        'systems/gameStateSystem',
+        'systems/positionSystem',
+        'systems/collisionSystem',
+        'systems/rockSystem',
         'systems/playerShipSystem'
 
     ], function(cog,
+                gameConfig,
                 Stats,
                 THREERenderSystem,
                 InputSystem,
+                GameStateSystem,
+                PositionSystem,
+                CollisionSystem,
+                RockSystem,
                 PlayerShipSystem
         ) {
 
@@ -39,14 +51,14 @@
         stats.domElement.style.top = '0px';
         document.body.appendChild(stats.domElement);
 
-        var game = cog.createDirector({
-            fixedDt: false,
-            soundEnabled: true,
-            assetDirectory: '../public/src/assets/'
-        });
+        var game = cog.createDirector(gameConfig);
 
         game.systems.add(THREERenderSystem);
         game.systems.add(InputSystem);
+        game.systems.add(GameStateSystem);
+        game.systems.add(PositionSystem);
+        game.systems.add(CollisionSystem);
+        game.systems.add(RockSystem);
         game.systems.add(PlayerShipSystem);
 
         game.onBeginStep(function() { stats.begin(); });

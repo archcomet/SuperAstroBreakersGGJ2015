@@ -1,8 +1,10 @@
 define([
     'cog',
     'three',
-    'components/threeComponent'
-], function(cog, THREE, THREEComponent) {
+    'components/threeComponent',
+    'components/positionComponent'
+
+], function(cog, THREE, THREEComponent, PositionComponent) {
 
     var THREERenderSystem = cog.System.extend('astro.THREERenderSystem', {
 
@@ -16,8 +18,8 @@ define([
 
             this.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 15000);
             this.camera.position.x = 0;
-            this.camera.position.y = -500;
-            this.camera.position.z = 4500;
+            this.camera.position.y = 0;
+            this.camera.position.z = 2000;
             this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
             this.scene = new THREE.Scene();
@@ -25,6 +27,25 @@ define([
 
             window.addEventListener('resize', this.onWindowResize.bind(this), false );
 
+        },
+
+        update: function(entityManager, eventManager, dt) {
+
+            var entity, component,
+                entities = entityManager.withComponents(PositionComponent);
+            var i = 0,
+                n = entities.length;
+
+            for (;i < n; ++i) {
+
+                entity = entities[i];
+                component = entity.components(PositionComponent);
+
+                entity._mesh.position.x = component.x;
+                entity._mesh.position.y = component.y;
+                entity._mesh.position.z = component.z;
+                entity._mesh.rotation.z = component.angle;
+            }
         },
 
         render: function() {
@@ -64,7 +85,8 @@ define([
             }
         },
 
-        'THREEComponent assigned event': function(threeComponent) {
+        'THREEComponent assigned event': function(threeComponent, entity) {
+            entity._mesh = threeComponent.mesh;
             this.scene.add(threeComponent.mesh);
         },
 

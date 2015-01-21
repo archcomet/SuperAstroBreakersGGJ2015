@@ -20,8 +20,8 @@ define([
         },
 
         _handleKeyInput: function (event) {
-            var pressed = (event.type === 'keyup') ? 'off' : 'on',
-                player, action, eventName;
+            var pressed = (event.type !== 'keyup'),
+                player, action;
 
             switch (event.keyCode) {
 // up (w, up arrow)
@@ -68,12 +68,10 @@ define([
                     action = 'rotateRight';
                     break;
                 }
-
             }
 
             if (action) {
-                eventName = 'input '+ player +' '+ action +' '+ pressed;
-                this._events.emit(eventName);
+                this._events.emit('input', player, action, pressed);
             }
         }
 
