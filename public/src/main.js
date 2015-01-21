@@ -5,7 +5,6 @@
 
     require.config({
         paths: {
-            'dat.gui': 'libs/dat.gui.min',
             'cog': 'libs/cog',
             'stats': 'libs/stats',
             'three': 'libs/three',
@@ -34,8 +33,7 @@
         'systems/collisionSystem',
         'systems/rockSystem',
         'systems/playerShipSystem',
-        'systems/soundSystem'
-        'systems/playerShipSystem',
+        'systems/soundSystem',
         'systems/bulletSystem',
         'systems/uiSystem'
 
@@ -64,13 +62,13 @@
         var game = cog.createDirector(gameConfig);
 
         game.systems.add(THREERenderSystem);
+        game.systems.add(SoundSystem);
         game.systems.add(InputSystem);
         game.systems.add(GameStateSystem);
         game.systems.add(PositionSystem);
         game.systems.add(CollisionSystem);
         game.systems.add(RockSystem);
         game.systems.add(PlayerShipSystem);
-        game.systems.add(SoundSystem);
         game.systems.add(BulletSystem);
         game.systems.add(UISystem);
 

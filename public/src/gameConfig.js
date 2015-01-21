@@ -11,10 +11,16 @@ define({
         color2: 0xff00ff
     },
     sounds: [
-        {fileName:'sfx/PositiveHit_01.mp3', name:'shotHit'},
+        {fileName:'sfx/ShotStd.mp3', name:'shotStd'},
         {fileName:'sfx/Explode.mp3', name:'explode'},
-        {fileName:'sfx/IntroMusic.mp3', name:'intro'},
-        {fileName:'sfx/WorldMusic.mp3', name:'worldMusic'}
+        {fileName:'sfx/Thrust.mp3', name:'thrust'},
+        {fileName:'sfx/PowerUp.mp3', name:'showPowerUp'},
+        {fileName:'sfx/PickUp.mp3', name:'powerUp'},
+        {fileName:'sfx/Help.mp3', name:'sayHelp'},
+        {fileName:'sfx/Chain.mp3', name:'chain'},
+        {fileName:'sfx/IntroMusic.mp3', name:'intro', loop:true},
+        {fileName:'sfx/WorldMusic.mp3', name:'worldMusic', loop:true},
+        {fileName:'sfx/EndMusic.mp3', name:'endMusic', loop:true}
     ],
 
     rocks: {

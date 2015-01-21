@@ -47,13 +47,16 @@
                 this.soundEnabled = true;
                 if (config.soundEnabled) this._loadSounds(config.sounds);
 
-                // todo: fix the problem with sound play with an initial gain of zero.
+
+                //this._playSound('intro', 0);
+                //this._muteSound('intro');
+                /* todo: fix the problem with sound play with an initial gain of zero.
                 this._playSound('square');
                 this._playSound('triangle', 0);
                 this._muteSound('triangle');
                 this._playSound('circle', 0);
                 this._muteSound('circle');
-
+                */
             }
 
         },
@@ -230,9 +233,9 @@
         },
         */
 
-        'goodCollision event': function () {
+        'shotFired event': function () {
 
-            this._playSound('shotHit');
+            this._playSound('fireStd');
 
         },
 
