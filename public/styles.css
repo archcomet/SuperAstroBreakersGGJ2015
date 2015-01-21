@@ -14,3 +14,38 @@ body, html {
 canvas {
     position: absolute;
 }
+
+
+#menu {
+    display: none;
+}
+#menu div {
+    position:absolute; 
+    top: 50%; 
+    left: 50%; 
+    border: solid 1px white; 
+    width: 200px; 
+
+}
+
+#header p {
+	float: left;
+}
+#header {
+	display:none;
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    z-index: 1;
+}
+#header, div {
+	clear: both;
+	width: 600px;
+}
+#end {
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    display:none;
+}
+

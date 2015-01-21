@@ -2,6 +2,7 @@
     'use strict';
 
     window.astro = {};
+
     require.config({
         paths: {
             'dat.gui': 'libs/dat.gui.min',
@@ -32,6 +33,9 @@
         'systems/rockSystem',
         'systems/playerShipSystem',
         'systems/soundSystem'
+        'systems/playerShipSystem',
+        'systems/bulletSystem',
+        'systems/uiSystem'
 
     ], function(cog,
                 gameConfig,
@@ -43,7 +47,10 @@
                 CollisionSystem,
                 RockSystem,
                 PlayerShipSystem,
-                SoundSystem
+                SoundSystem,
+                BulletSystem,
+                UISystem
+                
         ) {
 
         var stats = new Stats();
@@ -62,10 +69,14 @@
         game.systems.add(RockSystem);
         game.systems.add(PlayerShipSystem);
         game.systems.add(SoundSystem);
+        game.systems.add(BulletSystem);
+        game.systems.add(UISystem);
 
         game.onBeginStep(function() { stats.begin(); });
         game.onEndStep(function() { stats.end(); });
         game.start();
+
+        game.events.emit('screen start');
 
         astro.game = game;
     });
