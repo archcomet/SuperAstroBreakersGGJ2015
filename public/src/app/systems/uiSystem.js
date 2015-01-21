@@ -12,6 +12,7 @@ define([
             this._header = document.getElementById('header');
             this._end = document.getElementById('end');
             this._webGLContainer = document.getElementById('webGLContainer');
+            this._intro = document.getElementById('intro');
 
             this._scoreElement = document.getElementById('scoreValue');
             this._lifeElement = document.getElementById('lifeValue');
@@ -21,11 +22,11 @@ define([
             var self = this;
 
             document.getElementById("start").addEventListener("click", function() {
-                self._events.emit('game start');
+                self._events.emit('begin play');
             });
 
             document.getElementById("replay").addEventListener("click", function() {
-                self._events.emit('game start');
+                self._events.emit('begin play');
             });
         },
 
@@ -34,6 +35,7 @@ define([
             this._header.style.display = 'none';
             this._end.style.display = 'none';
             this._webGLContainer.style.display = 'none';
+            this._intro.style.display = 'block';
         },
 
         'begin play event': function() {
@@ -41,6 +43,7 @@ define([
             this._header.style.display = 'block';
             this._end.style.display = 'none';
             this._webGLContainer.style.display = 'block';
+            this._intro.style.display = 'none';
         },
 
         'end play event': function() {
@@ -48,6 +51,7 @@ define([
             this._header.style.display = 'none';
             this._end.style.display = 'block';
             this._webGLContainer.style.display = 'none';
+            this._intro.style.display = 'none';
         },
 
         'playerScore event': function (score) {

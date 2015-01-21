@@ -11,13 +11,15 @@
             'three': 'libs/three',
             'systems': 'app/systems',
             'components': 'app/components',
-            'box2d': 'libs/Box2dWeb-2.1.a.3'
+            'box2d': 'libs/Box2dWeb-2.1.a.3',
+            'tween': 'libs/tweenjs'
         },
 
         shim: {
             'stats': { exports: 'Stats' },
             'three': { exports: 'THREE' },
-            'box2d': { exports: 'Box2D' }
+            'box2d': { exports: 'Box2D' },
+            'tween': { exports: 'TWEEN' }
         }
     });
 

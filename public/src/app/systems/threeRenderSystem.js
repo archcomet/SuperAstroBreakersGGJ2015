@@ -100,6 +100,14 @@ define([
 
         'THREEComponent assigned event': function(threeComponent, entity) {
             entity._mesh = threeComponent.mesh;
+
+            threeComponent.mesh.position.x = threeComponent.spawnX || 0;
+            threeComponent.mesh.position.y = threeComponent.spawnY || 0;
+            threeComponent.mesh.position.z = threeComponent.spawnZ || 0;
+            threeComponent.mesh.rotation.x = threeComponent.spawnRX || 0;
+            threeComponent.mesh.rotation.y = threeComponent.spawnRY || 0;
+            threeComponent.mesh.rotation.z = threeComponent.spawnRZ || 0;
+
             this.scene.add(threeComponent.mesh);
         },
 

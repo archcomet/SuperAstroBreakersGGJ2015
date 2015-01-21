@@ -20,11 +20,14 @@ define({
     rocks: {
         maxLinearSpeed: 1000,
         maxAngularSpeed: 10,
-        minSplitRadius: 100,
-        radiusSpeedModifier: 50
+        minSplitRadius: 50,
+        radiusSpeedModifier: 50,
+        rockSplitCount: 3
     },
 
     bullets: {
-
+        radius: 10,
+        speed: 2000,
+        duration: 1000
     }
 });

@@ -1,9 +1,10 @@
 define([
     'cog',
     'components/bulletComponent',
-    'components/positionComponent'
+    'components/positionComponent',
+    'components/collisionComponent'
 
-], function(cog, BulletComponent, PositionComponent) {
+], function(cog, BulletComponent, PositionComponent, CollisionComponent) {
 
     var BulletSystem = cog.System.extend('astro.BulletSystem', {
 
@@ -12,29 +13,82 @@ define([
             this.entities = entities;
             this.bulletConfig = config.bullets;
             this.bullets = [];
+            this.bulletsToRemove = [];
         },
 
-        spawnBullet: function(radius, color, x, y, dx, dy) {
+        update: function(entities, events, dt) {
+
+            var bullet, bulletComponent,
+                i = 0,
+                n = this.bullets.length;
+
+            for (; i < n; ++i) {
+                bullet = this.bullets[i];
+                bulletComponent = bullet.components(BulletComponent);
+                bulletComponent.duration -= dt;
+
+                if (bulletComponent.duration < 0) {
+                    this.bulletsToRemove.push(bullet);
+                }
+            }
+
+            while(bullet = this.bulletsToRemove.pop()) {
+                if (bullet.valid) {
+                    this.despawnBullet(bullet);
+                }
+            }
+        },
+
+        spawnBullet: function(color, x, y, angle) {
 
             var bulletEntity = this.entities.add('Bullet');
 
             bulletEntity.components.assign(BulletComponent, {
-                color: color
+                radius: this.bulletConfig.radius,
+                color: color,
+                spawnX: x,
+                spawnY: y,
+                spawnRZ: angle,
+                duration: this.bulletConfig.duration
             });
 
+            var dx = Math.cos(angle) * this.bulletConfig.speed,
+                dy = Math.sin(angle) * this.bulletConfig.speed;
+
             bulletEntity.components.assign(PositionComponent, {
-                radius: radius,
+                radius: this.bulletConfig.radius,
                 x: x,
                 y: y,
                 dx: dx,
-                dy: dy
+                dy: dy,
+                rz: angle
+            });
+
+            bulletEntity.components.assign(CollisionComponent, {
+                startHandler: this.collisionHandler.bind(this)
             });
 
             this.bullets.push(bulletEntity);
         },
 
-        'fire event': function() {
-            console.log(arguments);
+        collisionHandler: function(bullet, other) {
+
+            if (other.tag === 'Rock') {
+                this.bulletsToRemove.push(bullet);
+            }
+        },
+
+        despawnBullet: function(bullet) {
+            this.entities.remove(bullet);
+
+            var i = this.bullets.indexOf(bullet);
+            if (i > -1) {
+                this.bullets.splice(i, 1);
+            }
+        },
+
+        'fire event': function(options) {
+            this.spawnBullet(options.color, options.position.x, options.position.y, options.angle);
         }
 
     });

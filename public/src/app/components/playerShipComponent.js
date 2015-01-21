@@ -7,7 +7,9 @@ define([
 
     var PlayerShipComponent = THREEComponent.extend('astro.PlayerShipComponent', {
 
-        init: function() {
+        init: function(entity, options) {
+            this._super(entity, options);
+
             var geometry = new THREE.CylinderGeometry(0, 50, 100, 3, 1, false);
             var material1 = new THREE.MeshBasicMaterial( {color: 0xffff00, opacity: 0.5, transparent: true} );
             var material2 = new THREE.MeshBasicMaterial( {color: 0x00ffff, opacity: 0.5, transparent: true} );
