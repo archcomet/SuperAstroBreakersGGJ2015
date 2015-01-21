@@ -2,7 +2,6 @@
     'use strict';
 
     window.astro = {};
-
     require.config({
         paths: {
             'dat.gui': 'libs/dat.gui.min',
@@ -31,7 +30,8 @@
         'systems/positionSystem',
         'systems/collisionSystem',
         'systems/rockSystem',
-        'systems/playerShipSystem'
+        'systems/playerShipSystem',
+        'systems/soundSystem'
 
     ], function(cog,
                 gameConfig,
@@ -42,7 +42,8 @@
                 PositionSystem,
                 CollisionSystem,
                 RockSystem,
-                PlayerShipSystem
+                PlayerShipSystem,
+                SoundSystem
         ) {
 
         var stats = new Stats();
@@ -60,6 +61,7 @@
         game.systems.add(CollisionSystem);
         game.systems.add(RockSystem);
         game.systems.add(PlayerShipSystem);
+        game.systems.add(SoundSystem);
 
         game.onBeginStep(function() { stats.begin(); });
         game.onEndStep(function() { stats.end(); });
