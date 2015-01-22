@@ -7,11 +7,20 @@
 
     var SoundSystem = cog.System.extend('sandbox.SoundSystem', {
 
+        IsInit:true, //are we reinitializing the sound. Fetching it from the servers and cacheing it.
+
         /* holds the sound buffers */
         sounds : {},
+        origSounds:{},
+        totalSounds:0,
+        loadLimiter:1,  //How many will load initially. After those are loaded a secondary load goes out for the rest.
+        loadedLength:0,
 
         /* queue of audio events to handle, checked each update step */
         audioQueue: [],
+
+        /* sounds that are being pitch shifted */
+        pitchedAudio:[],
 
         assetDirectory : "assets/",
         webAudioSupported : false,
@@ -45,11 +54,8 @@
 
             if (this.webAudioSupported && config.soundEnabled) {
                 this.soundEnabled = true;
-                if (config.soundEnabled) this._loadSounds(config.sounds);
+                if (config.soundEnabled) this._preLoadSounds(config.sounds);
 
-
-                //this._playSound('intro', 0);
-                //this._muteSound('intro');
                 /* todo: fix the problem with sound play with an initial gain of zero.
                 this._playSound('square');
                 this._playSound('triangle', 0);
@@ -61,10 +67,9 @@
 
         },
 
-        update: function () {
-
+        update: function (en, ev, dt) {
             this._processAudioQueue();
-
+            this._processPitch(dt);
         },
 
         _processAudioQueue: function () {
@@ -104,24 +109,69 @@
                         break;
                     case this.REQ_MUTE:
                         console.log("mutting sound [" + sound.name + "] with a gain of [0]");
+                        if (sound.gainNode)
+                            sound.gainNode.gain.value = 0;
+                        /*
                         if (sound.sources) {
+
                             sound.sources.forEach(function(source) {
                                 source.gain.value = 0;
                             }, this);
-                        }
+                        }*/
                         break;
                     case this.REQ_UNMUTE:
                         console.log("mutting sound [" + sound.name + "] with a gain of [1]");
+                        if(sound.gainNode)
+                            sound.gainNode.gain.value = sound.gain;
+                        /*
                         if (sound.sources) {
                             sound.sources.forEach(function(source) {
                                 source.gain.value = 1;
 
                             }, this);
                         }
+                        */
                         break;
                 }
             }
 
+        },
+
+        _processPitch:function(dt){
+            for (var i=0; i< this.pitchedAudio.length; i++) {
+
+                var soundData = this.pitchedAudio[i];
+                var sound = this.sounds[soundData.name];
+                if (soundData.create) {
+                    soundData.create = false;
+                    var soundSource = this._createSoundSource(sound, soundData.gain);
+                    sound.sources = sound.sources || [];
+                    sound.sources.push(soundSource);
+                    soundSource.start(0);
+                }else{
+                    //make sure to have the sound play the whole duration
+                    if(sound.buffer.duration > soundData.duration)
+                        sound.loop = true;
+                    sound.sources.forEach(function (source) {
+                        print(source.playbackRate.value);
+                    }, this);
+
+                    soundData.currentTime += dt*1000;
+                    if (soundData.currentTime >= soundData.duration)
+                    {
+                        if(sound.gainNode)
+                            sound.gainNode.gain.value
+                        if (sound.sources) {
+                            sound.sources.forEach(function(source) {
+                                source.stop(0);
+                            }, this);
+
+                            sound.sources.length = 0;
+                        }
+                    }
+                }
+
+            }
         },
 
         _createSoundSource: function(sound, gain) {
@@ -130,10 +180,11 @@
             var gainNode = this._audioContext.createGain ? this._audioContext.createGain()
                 : this._audioContext.createGainNode();
 
-            gainNode.value = gain;
             source.buffer = sound.buffer;
             source.connect(gainNode);
-            source.connect(this._audioContext.destination);
+            sound.gainNode = gainNode;      //Can be manipulated over time to control volume.
+            gainNode.connect(this._audioContext.destination);
+            gainNode.gain.value = this.IsMuted ? 0 : gain;
 
             // apply looping properties to buffer
             if (sound.loop) source.loop = true;
@@ -143,16 +194,24 @@
 
         /* audio retrieval functions */
 
-        _loadSounds: function (sounds) {
-
-            for (var i=0; i < sounds.length; i++) {
+        _preLoadSounds: function (sounds) {
+            this.totalSounds = sounds.length;
+            this.origSounds.aArray = sounds.slice();
+            for (var i=0; i < this.loadLimiter; i++) {
                 this._downloadSound(sounds[i]);
+                this.origSounds[sounds[i].name] = sounds[i];
             }
 
         },
 
-        _downloadSound: function (sound) {
+        _loadSounds: function () {
+            for (var i=this.loadLimiter; i < this.totalSounds; i++) {
+                this._downloadSound(this.origSounds.aArray[i]);
+                this.origSounds[this.origSounds.aArray[i].name] = this.origSounds.aArray[i];
+            }
+        },
 
+        _downloadSound: function (sound) {
             var fileName = sound.fileName;
             var name = sound.name;
 
@@ -169,6 +228,15 @@
                     function(buffer) {
                         sound.buffer = buffer;
                         soundSystem.sounds[name] = sound;
+                        soundSystem.loadedLength++;
+                        console.log(name+" - current:" + soundSystem.loadedLength + " Limiter:" + soundSystem.loadLimiter + " t:" + soundSystem.totalSounds)
+                        if (soundSystem.IsInit && soundSystem.loadedLength >= soundSystem.loadLimiter)
+                        {
+                            console.log("I THINK IT FUCKING WORKED!");
+                            soundSystem.IsInit = false;
+                            soundSystem._loadSounds();
+                            //soundSystem.events.emit('postLoad');
+                      }
                     }, function() {
                         console.log("SoundSystem: error downloading sound. error=" + e);
                     });
@@ -182,8 +250,13 @@
 
         _playSound: function (name, gain) {
 
+            console.log(name)
+            console.log(this.origSounds[name]);
             if ( typeof gain === "undefined") {
-                gain = 1;
+                if (typeof this.origSounds[name].gain === "undefined")
+                    gain = 1;
+                else
+                    gain = this.origSounds[name].gain;
             }
 
             this.audioQueue.push({ name: name, type: this.REQ_PLAY, gain: gain });
@@ -233,15 +306,50 @@
         },
         */
 
-        'shotFired event': function () {
+        'stopAllSounds event' :function(){
+            this.audioQueue = this.sounds.map(function(sound){
+                return {name:sound.name, type: this.REQ_STOP}
+            });
+        },
 
-            this._playSound('fireStd');
+        'muteAll event' :function(){
+            var mute = this.REQ_MUTE;
+            this.IsMuted = true;
+            this.audioQueue = this.origSounds.aArray.map(function(sound){
+                return {name:sound.name, type: mute}
+            });
+        },
+
+        'unMuteAll event' :function(){
+            var mute = this.REQ_UNMUTE;
+            this.IsMuted = false;
+            this.audioQueue = this.origSounds.aArray.map(function(sound){
+                return {name:sound.name, type: mute}
+            });
+        },
+
+        //dur is length in seconds you want this to play for
+        //dPitch is the change in pitch over the duration
+        'fireHook event' : function(dur, dPitch) {
+
+            this.pitchedAudio.push({name:'chain', duration:dur, deltaPitch:dPitch, create:true, currentTime:0})
+        },
+
+        'fire event': function () {
+
+            this._playSound('shotStd');
 
         },
 
-        'badCollision event': function () {
+        'explode event': function () {
 
             this._playSound('explode');
+
+        },
+
+        'thrust event': function () {
+
+            this._playSound('thrust');
 
         },
 

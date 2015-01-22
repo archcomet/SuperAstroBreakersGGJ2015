@@ -25,6 +25,21 @@ define([
             document.getElementById("start").addEventListener("click", function() {
                 self._events.emit('begin play');
             });
+
+            document.getElementById("toggleMute").addEventListener("click", function() {
+                var elm = document.getElementById("toggleMute");
+                if (elm.textContent.indexOf("not") == -1)
+                {
+                    self._events.emit('unMuteAll');
+                    elm.textContent = "Is not Muted."
+                }
+                else{
+                    self._events.emit('muteAll');
+                    elm.textContent = "Is Muted.";
+                }
+
+            });
+
             document.getElementById("replay").addEventListener("click", function() {
                 self._events.emit('begin play');
             });
@@ -56,6 +71,8 @@ define([
             this._end.style.display = 'none';
             this._webGLContainer.style.display = 'none';
             this._intro.style.display = 'block';
+
+            this._events.emit('playSound', 'introMusic');
         },
 
         'begin play event': function() {
@@ -64,6 +81,10 @@ define([
             this._end.style.display = 'none';
             this._webGLContainer.style.display = 'block';
             this._intro.style.display = 'none';
+
+            this._events.emit('stopSound', 'introMusic');
+            this._events.emit('playSound', 'worldMusic');
+
         },
 
         'end play event': function() {
@@ -72,6 +93,9 @@ define([
             this._end.style.display = 'block';
             this._webGLContainer.style.display = 'none';
             this._intro.style.display = 'none';
+
+            this._events.emit('stopSound', 'worldMusic');
+            this._events.emit('playSound', 'endMusic');
         },
 
         'playerScore event': function (score) {
