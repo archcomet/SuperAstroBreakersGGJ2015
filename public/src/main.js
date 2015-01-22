@@ -5,6 +5,7 @@
 
     require.config({
         paths: {
+            'dat.gui': 'libs/dat.gui.min',
             'cog': 'libs/cog',
             'stats': 'libs/stats',
             'three': 'libs/three',
@@ -35,7 +36,8 @@
         'systems/playerShipSystem',
         'systems/soundSystem',
         'systems/bulletSystem',
-        'systems/uiSystem'
+        'systems/uiSystem',
+        'systems/pickUpSystem'
 
     ], function(cog,
                 gameConfig,
@@ -49,8 +51,8 @@
                 PlayerShipSystem,
                 SoundSystem,
                 BulletSystem,
-                UISystem
-                
+                UISystem,
+                PickUpSystem
         ) {
 
         var stats = new Stats();
@@ -71,6 +73,7 @@
         game.systems.add(PlayerShipSystem);
         game.systems.add(BulletSystem);
         game.systems.add(UISystem);
+        game.systems.add(PickUpSystem);
 
         game.onBeginStep(function() { stats.begin(); });
         game.onEndStep(function() { stats.end(); });

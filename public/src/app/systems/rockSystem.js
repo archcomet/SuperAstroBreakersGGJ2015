@@ -35,6 +35,10 @@ define([
             this.spawnRandomRock(50);
         },
 
+        'end play event': function() {
+            this.despawnAllRocks();
+        },
+
         spawnRandomRock: function(radius) {
             var x = cog.rand.arc4rand(-this.cameraComponent.visibleWidth/2, this.cameraComponent.visibleWidth/2),
                 y = cog.rand.arc4rand(-this.cameraComponent.visibleHeight/2, this.cameraComponent.visibleHeight/2);
@@ -82,6 +86,22 @@ define([
             return rockEntity;
         },
 
+        despawnRock: function(rock) {
+            var index = this.rocks.indexOf(rock);
+            this.rocks.splice(index, 1);
+            this.entities.remove(rock);
+        },
+
+        despawnAllRocks: function() {
+            var i = 0, n = this.rocks.length;
+            for (; i < n; ++i) {
+
+                this.entities.remove(this.rocks[i]);
+            }
+            this.rocks.length = 0;
+            this.rocksToDestroy.length = 0;
+        },
+
         collisionHandler: function(rock, otherEntity) {
             if (otherEntity.tag === 'PlayerShip') {
                 this.rocksToDestroy.push(rock);
@@ -100,9 +120,7 @@ define([
                     this.spawnRock(positionComponent.radius / 2, positionComponent.x, positionComponent.y);
                 }
             }
-            var index = this.rocks.indexOf(rock);
-            this.rocks.splice(index, 1);
-            this.entities.remove(rock);
+            this.despawnRock(rock);
         }
     });
 
