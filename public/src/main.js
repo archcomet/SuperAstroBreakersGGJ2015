@@ -22,11 +22,13 @@
     require([
         'cog',
         'stats',
-        'systems/threeRenderSystem'
+        'systems/threeRenderSystem',
+        'systems/inputSystem'
 
     ], function(cog,
                 Stats,
-                THREERenderSystem
+                THREERenderSystem,
+                InputSystem
         ) {
 
         var stats = new Stats();
@@ -42,6 +44,7 @@
         });
 
         game.systems.add(THREERenderSystem);
+        game.systems.add(InputSystem);
 
         game.onBeginStep(function() { stats.begin(); });
         game.onEndStep(function() { stats.end(); });
