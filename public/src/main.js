@@ -24,12 +24,18 @@
         'stats',
         'systems/threeRenderSystem',
         'systems/inputSystem',
+        'systems/gameStateSystem',
+        'systems/positionSystem',
+        'systems/collisionSystem',
         'systems/playerShipSystem'
 
     ], function(cog,
                 Stats,
                 THREERenderSystem,
                 InputSystem,
+                GameStateSystem,
+                PositionSystem,
+                CollisionSystem,
                 PlayerShipSystem
         ) {
 
@@ -47,6 +53,9 @@
 
         game.systems.add(THREERenderSystem);
         game.systems.add(InputSystem);
+        game.systems.add(GameStateSystem);
+        game.systems.add(PositionSystem);
+        game.systems.add(CollisionSystem);
         game.systems.add(PlayerShipSystem);
 
         game.onBeginStep(function() { stats.begin(); });
