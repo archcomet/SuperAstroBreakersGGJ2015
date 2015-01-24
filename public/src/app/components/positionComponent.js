@@ -7,10 +7,12 @@ define([
             x: 0,
             y: 0,
             z: 0,
+            angle: 0,
 
             dx: 0,
             dy: 0,
-            dz: 0
+            dz: 0,
+            da: 0
         }
     });
 
