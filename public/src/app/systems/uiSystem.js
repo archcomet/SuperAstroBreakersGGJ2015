@@ -12,12 +12,6 @@ define([
             this._header = document.getElementById('header');
             this._end = document.getElementById('end');
             this._webGLContainer = document.getElementById('webGLContainer');
-        },
-        start : function () {
-            this._menu.style.display = 'block';
-            this._header.style.display = 'none';
-            this._end.style.display = 'none';
-            this._webGLContainer.style.display = 'none';
 
         },
 
@@ -28,7 +22,14 @@ define([
             this._webGLContainer.style.display = 'block';
 
         },
+        start : function () {
+            this._menu.style.display = 'block';
+            this._header.style.display = 'none';
+            this._end.style.display = 'none';
+            this._webGLContainer.style.display = 'none';
 
+
+        },
         end :function() {
             this._menu.style.display = 'none';
             this._header.style.display = 'none';
@@ -38,6 +39,13 @@ define([
         },
         'screen start event': function() {
             this.start();
+            var self = this;
+            document.getElementById("start").addEventListener("click",
+                function() {
+                    self.gameTime();
+                }
+
+            );
         },
         'screen game event': function() {
             this.gameTime();
@@ -48,6 +56,10 @@ define([
 
     });
 
+
+
     astro.UISystem = UISystem;
+
+
     return astro.UISystem;
 });
