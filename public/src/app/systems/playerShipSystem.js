@@ -1,10 +1,9 @@
 define([
     'cog',
     'components/playerShipComponent',
-    'components/positionComponent',
-    'components/threeComponent'
+    'components/positionComponent'
 
-], function(cog, PlayerShipComponent, PositionComponent, THREEComponent) {
+], function(cog, PlayerShipComponent, PositionComponent) {
 
     var PlayerShipSystem = cog.System.extend('astro.PlayerShipSystem', {
 
@@ -13,8 +12,8 @@ define([
             // for now...
 
             this.playerShipEntity = entities.add('PlayerShip');
-
-
+            this.playerShipEntity.components.assign(PlayerShipComponent);
+            this.playerShipEntity.components.assign(PositionComponent);
         },
 
         update: function(entities, events, dt) {
