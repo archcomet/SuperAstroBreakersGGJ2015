@@ -10,12 +10,14 @@
             'stats': 'libs/stats',
             'three': 'libs/three',
             'systems': 'app/systems',
-            'components': 'app/components'
+            'components': 'app/components',
+            'box2d': 'libs/Box2dWeb-2.1.a.3'
         },
 
         shim: {
             'stats': { exports: 'Stats' },
-            'three': { exports: 'THREE' }
+            'three': { exports: 'THREE' },
+            'box2d': { exports: 'Box2D' }
         }
     });
 
