@@ -1,6 +1,8 @@
 (function() {
     'use strict';
 
+    window.astro = {};
+
     require.config({
         paths: {
             'dat.gui': 'libs/dat.gui.min',
@@ -24,7 +26,7 @@
 
     ], function(cog,
                 Stats,
-                ThreeRenderSystem
+                THREERenderSystem
         ) {
 
         var stats = new Stats();
@@ -39,20 +41,13 @@
             assetDirectory: '../public/src/assets/'
         });
 
-        game.systems.add(ThreeRenderSystem);
+        game.systems.add(THREERenderSystem);
 
-
-        game.onBeginStep(function() {
-            stats.begin();
-        });
-
-        game.onEndStep(function() {
-            stats.end();
-        });
-
+        game.onBeginStep(function() { stats.begin(); });
+        game.onEndStep(function() { stats.end(); });
         game.start();
 
-        window.game = game;
+        astro.game = game;
     });
 
 }());

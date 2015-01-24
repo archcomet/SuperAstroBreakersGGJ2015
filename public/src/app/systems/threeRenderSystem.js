@@ -3,7 +3,7 @@ define([
     'three'
 ], function(cog, THREE) {
 
-    var ThreeRenderSystem = cog.System.extend({
+    var THREERenderSystem = cog.System.extend('astro.THREERenderSystem', {
 
         configure: function() {
             this.container = document.getElementById('webGLContainer');
@@ -20,7 +20,7 @@ define([
 
     });
 
-    cog.ThreeRenderSystem = ThreeRenderSystem;
+    astro.THREERenderSystem = THREERenderSystem;
 
-    return ThreeRenderSystem;
+    return THREERenderSystem;
 });
