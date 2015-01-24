@@ -4,11 +4,12 @@ define([
 
 ], function(cog, PositionComponent) {
 
-    var X_RANGE = 1900,
-        Y_RANGE = 1300,
-        SLOP = 5;
-
     var PositionSystem = cog.System.extend('astro.PositionSystem', {
+
+        configure: function(entities, events, config) {
+            this.xMax = config.bounds.xMax;
+            this.yMax = config.bounds.yMax;
+        },
 
         update: function(entityManager, eventManager, dt) {
 
@@ -24,20 +25,20 @@ define([
                 component.z += component.dz * delta;
                 component.angle += component.da * delta;
 
-                if (component.x > X_RANGE) {
-                    component.x = -X_RANGE + SLOP;
+                if (component.x > this.xMax) {
+                    component.x = -this.xMax;
                 }
 
-                if (component.x < -X_RANGE) {
-                    component.x = X_RANGE - SLOP;
+                if (component.x < -this.xMax) {
+                    component.x = this.xMax;
                 }
 
-                if (component.y > Y_RANGE) {
-                    component.y = -Y_RANGE + SLOP;
+                if (component.y > this.yMax ) {
+                    component.y = -this.yMax;
                 }
 
-                if (component.y < -Y_RANGE) {
-                    component.y = Y_RANGE - SLOP;
+                if (component.y < -this.yMax ) {
+                    component.y = this.yMax;
                 }
             }
         }

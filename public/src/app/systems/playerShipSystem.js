@@ -12,10 +12,8 @@ define([
 
         configure: function(entities, events, config) {
 
-            // for now...
-            this.playerShipEntity = entities.add('PlayerShip');
-            this.ship = this.playerShipEntity.components.assign(PlayerShipComponent);
-            this.position = this.playerShipEntity.components.assign(PositionComponent);
+            this.entities = entities;
+            this.spawnPlayer();
 
             this.player1 = {
                 rotateRight: false,
@@ -32,7 +30,17 @@ define([
             };
         },
 
+        spawnPlayer: function() {
+            this.playerShipEntity = this.entities.add('PlayerShip');
+            this.ship = this.playerShipEntity.components.assign(PlayerShipComponent);
+            this.position = this.playerShipEntity.components.assign(PositionComponent);
+        },
+
         update: function(entities, events, dt) {
+
+            if (!this.playerShipEntity) {
+                return;
+            }
 
             var da1 = 0,
                 da2 = 0,
