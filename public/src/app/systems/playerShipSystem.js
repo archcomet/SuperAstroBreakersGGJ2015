@@ -10,7 +10,6 @@ define([
         configure: function(entities, events, config) {
 
             // for now...
-
             this.playerShipEntity = entities.add('PlayerShip');
             this.playerShipEntity.components.assign(PlayerShipComponent);
             this.playerShipEntity.components.assign(PositionComponent);
