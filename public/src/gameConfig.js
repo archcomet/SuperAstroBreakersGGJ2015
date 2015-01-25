@@ -3,10 +3,10 @@ define({
     soundEnabled: true,
     assetDirectory: '../public/src/assets/',
 
-    bounds: {
-        xMax: 1900,
-        yMax: 1300
-    },
-
-    rockSpeedMax: 500
+    rocks: {
+        maxLinearSpeed: 1000,
+        maxAngularSpeed: 10,
+        minSplitRadius: 100,
+        radiusSpeedModifier: 50
+    }
 });

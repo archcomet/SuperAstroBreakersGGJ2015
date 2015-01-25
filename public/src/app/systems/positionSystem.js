@@ -1,17 +1,21 @@
 define([
     'cog',
-    'components/positionComponent'
+    'components/positionComponent',
+    'components/cameraComponent'
 
-], function(cog, PositionComponent) {
+], function(cog, PositionComponent, CameraComponent) {
 
     var PositionSystem = cog.System.extend('astro.PositionSystem', {
 
         configure: function(entities, events, config) {
-            this.xMax = config.bounds.xMax;
-            this.yMax = config.bounds.yMax;
+            this.cameraComponent = entities.withTag('camera')[0].components(CameraComponent);
+
         },
 
         update: function(entityManager, eventManager, dt) {
+
+            var xMax = this.cameraComponent.visibleWidth/2;
+            var yMax = this.cameraComponent.visibleHeight/2;
 
             var entities = entityManager.withComponents(PositionComponent);
             var i = 0, n = entities.length;
@@ -23,22 +27,25 @@ define([
                 component.x += component.dx * delta;
                 component.y += component.dy * delta;
                 component.z += component.dz * delta;
-                component.angle += component.da * delta;
 
-                if (component.x > this.xMax) {
-                    component.x = -this.xMax;
+                component.rx += component.drx * delta;
+                component.ry += component.dry * delta;
+                component.rz += component.drz * delta;
+
+                if (component.x > xMax + component.radius) {
+                    component.x = -xMax - component.radius;
                 }
 
-                if (component.x < -this.xMax) {
-                    component.x = this.xMax;
+                if (component.x < -xMax - component.radius) {
+                    component.x = xMax + component.radius;
                 }
 
-                if (component.y > this.yMax ) {
-                    component.y = -this.yMax;
+                if (component.y > yMax + component.radius) {
+                    component.y = -yMax - component.radius;
                 }
 
-                if (component.y < -this.yMax ) {
-                    component.y = this.yMax;
+                if (component.y < -yMax - component.radius ) {
+                    component.y = yMax + component.radius;
                 }
             }
         }

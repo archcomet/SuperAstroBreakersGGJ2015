@@ -19,6 +19,7 @@ canvas {
     display:none;
 }
 
+
 #menu {
     display: none;
 }
@@ -36,6 +37,10 @@ canvas {
 }
 #header {
 	display:none;
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    z-index: 1;
 }
 #header, div {
 	clear: both;
