@@ -12,11 +12,12 @@ define([
 
         configure: function(entityManager, eventManager, config) {
             this._events = eventManager;
+            this._config = config;
             this._resetStats(config);
         },
 
         'begin play event': function () {
-            this._resetStats();
+            this._resetStats(this._config);
             this._state = State.STARTED;
         },
 

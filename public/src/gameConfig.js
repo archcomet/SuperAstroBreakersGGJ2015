@@ -32,5 +32,6 @@ define({
 
     scene: {
         starCount: 2500
-    }
+    },
+    rockBonus: 10
 });
