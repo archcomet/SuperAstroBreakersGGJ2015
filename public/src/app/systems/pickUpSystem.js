@@ -46,6 +46,7 @@ define([
                 x: x,
                 y: y
             });
+
             pickUpEntity.components.assign(CollisionComponent, {
                 startHandler: this.collisionHandler.bind(this)
             });
@@ -99,6 +100,10 @@ define([
                 pickUp = this.pickUps[i];
                 pickUpComponent = pickUp.components(PickUpComponent);
                 pickUpComponent.duration -= dt;
+
+                pickUpComponent.ring1.rotation.x += 5 * (dt/1000);
+                pickUpComponent.ring2.rotation.y += 5 * (dt/1000);
+                pickUpComponent.ring3.rotation.x += 5 * (dt/1000);
 
                 if (pickUpComponent.duration < 0) {
                     this.pickUpsToRemove.push(pickUp);
