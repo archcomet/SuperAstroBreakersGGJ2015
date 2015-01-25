@@ -33,7 +33,9 @@ define([
         spawnPlayer: function() {
             this.playerShipEntity = this.entities.add('PlayerShip');
             this.ship = this.playerShipEntity.components.assign(PlayerShipComponent);
-            this.position = this.playerShipEntity.components.assign(PositionComponent);
+            this.position = this.playerShipEntity.components.assign(PositionComponent, {
+                radius: 150
+            });
         },
 
         update: function(entities, events, dt) {
