@@ -27,7 +27,7 @@ define([
                 return;
             }
 
-            this._playerLife = this._playerLife - cog.rand.arc4randInt(this._rockCollisionCostMin, this._rockCollisionCostMax);
+            this._playerLife = this._playerLife - 1;
 
             this._events.emit('playerLife', this._playerLife);
 
@@ -68,13 +68,11 @@ define([
         _resetStats: function (config) {
             config = config || {};
             this._state = State.STOPPED;
-            this._playerLife = config.playerLife || 100;
+            this._playerLife = config.playerLife || 5;
             this._score = config.score || 0;
             this._rockBonus = config.rockBonus || Math.E;
             this._civilianSavedBonus = config.civilianSavedBonus || Math.PI;
             this._civilianLostCost = config.civilianLostCost || (-2 * Math.PI);
-            this._rockCollisionCostMin = config.rockCollisionCostMin || 20;
-            this._rockCollisionCostMax = config.rockCollisionCostMax || 50;
 
             this._events.emit('playerScore', this._score);
             this._events.emit('playerLife', this._playerLife);
