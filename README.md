@@ -6,7 +6,7 @@ This year's theme: “What do we do now?“
 Clear the debris from this region of space to make the way safe. In Super Astro Breakers, ‘buddy system’ takes on a whole new meaning as you and your buddy independently control two ships. Cooperate with your buddy to survive, or fight them and meet certain disaster. Take care to watch out for any dangers lurking in the blackness!
 
 
-Play it here: 
+Play it here: http://archcomet.github.io/SuperAstroBreakersGGJ2015/public/
 
 Controls:
 
