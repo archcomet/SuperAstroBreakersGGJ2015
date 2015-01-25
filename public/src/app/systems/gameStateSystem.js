@@ -19,6 +19,7 @@ define([
             this._resetStats();
             this._state = State.STARTED;
             this._events.emit('screen game');
+            this._events.emit('begin play');
         },
 
         'game rockCollision event': function () {
