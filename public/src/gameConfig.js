@@ -75,5 +75,7 @@ define({
     blackhole: {
         radius: 300,
         speed: 100
-    }
+    },
+
+    rockBonus: 10
 });
