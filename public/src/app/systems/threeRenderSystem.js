@@ -10,6 +10,9 @@ define([
     var THREERenderSystem = cog.System.extend('astro.THREERenderSystem', {
 
         configure: function(entities, events, config) {
+
+            this.sceneConfig = config.scene;
+
             this.container = document.getElementById('webGLContainer');
 
             this.renderer = new THREE.WebGLRenderer( { antialias: false, alpha:true } );
@@ -23,7 +26,7 @@ define([
             this.camera.position.z = 2000;
             this.camera.lookAt(new THREE.Vector3(0, 0, 0));
             this.cameraEntity = entities.add('camera');
-            this.cameraEntity.components.assign(CameraComponent, {
+            this.cameraComponent = this.cameraEntity.components.assign(CameraComponent, {
                 camera: this.camera,
                 window: window
             });
@@ -36,10 +39,26 @@ define([
 
             this.scene.add( directionalLight );
 
+            this.createStarField();
+
             window.addEventListener('resize', this.onWindowResize.bind(this), false );
+
+            this.playing = false;
+        },
+
+        'begin play event': function() {
+            this.playing = true;
+        },
+
+        'end play event': function() {
+            this.playing = false;
         },
 
         update: function(entityManager, eventManager, dt) {
+
+            if (!this.playing) {
+                return;
+            }
 
             var entity, component,
                 entities = entityManager.withComponents(PositionComponent);
@@ -58,6 +77,39 @@ define([
                 entity._mesh.rotation.x = component.rx;
                 entity._mesh.rotation.y = component.ry;
                 entity._mesh.rotation.z = component.rz;
+            }
+
+            this.starField.rotation.z += 0.0001;
+        },
+
+        createStarField: function() {
+            this.starGeometry = new THREE.Geometry();
+
+            var i, n;
+
+            for (i = 0, n = this.sceneConfig.starCount; i < n; ++i) {
+                this.starGeometry .vertices.push( new THREE.Vector3() );
+            }
+
+            this.updateStarFieldVertices();
+
+            var material = new THREE.PointCloudMaterial( { size: 10 } );
+            this.starField = new THREE.PointCloud( this.starGeometry , material );
+
+            this.scene.add(this.starField);
+        },
+
+        updateStarFieldVertices: function() {
+
+            var height = this.cameraComponent.visibleHeight,
+                width = this.cameraComponent.visibleWidth;
+
+            var i, n;
+            for (i = 0, n = this.sceneConfig.starCount; i < n; ++i) {
+                var vertex = this.starGeometry.vertices[i];
+                vertex.x = Math.random() * width*2- width;
+                vertex.y = Math.random() * height*2- height;
+                vertex.z = Math.random() * 4000 - 4000;
             }
         },
 
@@ -119,7 +171,9 @@ define([
             this.camera.aspect = window.innerWidth / window.innerHeight;
             this.camera.updateProjectionMatrix();
             this.renderer.setSize( window.innerWidth, window.innerHeight );
-            this.cameraEntity.components(CameraComponent).updateVisibleArea();
+            this.cameraComponent.updateVisibleArea();
+
+            this.updateStarFieldVertices();
         }
 
     });
