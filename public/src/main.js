@@ -33,7 +33,8 @@
         'systems/rockSystem',
         'systems/playerShipSystem',
         'systems/bulletSystem',
-        'systems/uiSystem'
+        'systems/uiSystem',
+        'systems/pickUpSystem'
 
     ], function(cog,
                 gameConfig,
@@ -46,7 +47,8 @@
                 RockSystem,
                 PlayerShipSystem,
                 BulletSystem,
-                UISystem
+                UISystem,
+                PickUpSystem
         ) {
 
         var stats = new Stats();
@@ -66,6 +68,7 @@
         game.systems.add(PlayerShipSystem);
         game.systems.add(BulletSystem);
         game.systems.add(UISystem);
+        game.systems.add(PickUpSystem);
 
         game.onBeginStep(function() { stats.begin(); });
         game.onEndStep(function() { stats.end(); });
