@@ -4,9 +4,9 @@ define({
     assetDirectory: '../public/src/assets/',
 
     player: {
-        rateOfFire: 3,
+        rateOfFire: 10,
         angularVelocity: 7,
-        linearAcceleration: 10,
+        linearAcceleration: 20,
         color1: 0xffff00,
         color2: 0xff00ff
     },
@@ -69,7 +69,7 @@ define({
     },
 
     scene: {
-        starCount: 2500
+        starCount: 3000
     },
     rockBonus: 10
 });

@@ -13,8 +13,11 @@ define([
 
             var geometry = new THREE.SphereGeometry(options.radius, 5, 5);
             var material = new THREE.MeshPhongMaterial({
-                color: 0xff00ff,
-                emissive: 0x110033
+                color: 0x584D3E,
+                emissive: 0x201111,
+                specular: 0xffffff,
+                shininess: 5
+
             });
 
             this.mesh = new THREE.Mesh(geometry, material);

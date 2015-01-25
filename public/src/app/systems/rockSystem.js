@@ -111,9 +111,16 @@ define([
                 this.rocksToDestroy.push(rock);
                 this.events.emit('rock destroyed');
             }
+
+            if (otherEntity.tag === 'Blackhole') {
+                this.rocksToDestroy.push(rock);
+            }
         },
 
         breakRock: function(rock) {
+            if (!rock.valid) {
+                return;
+            }
             var positionComponent = rock.components(PositionComponent);
             if (positionComponent.radius > this.rocksConfig.minSplitRadius) {
                 var i = 0, n = this.rocksConfig.rockSplitCount;

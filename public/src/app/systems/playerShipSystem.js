@@ -35,7 +35,6 @@ define([
             this.emitThrustSound = false;
             this.playerDied = false;
             this.invincibility = 1000;
-            this.shield = null;
         },
 
         'begin play event': function() {
@@ -48,6 +47,10 @@ define([
 
         collisionStartHandler: function(player, otherObject) {
             if (otherObject.tag === 'Rock' && this.invincibility <= 0) {
+                this.playerDied = true;
+            }
+
+            if (otherObject.tag === 'Blackhole') {
                 this.playerDied = true;
             }
         },
@@ -67,7 +70,9 @@ define([
             this.playerShipEntity = this.entities.add('PlayerShip');
             this.ship = this.playerShipEntity.components.assign(PlayerShipComponent);
             this.position = this.playerShipEntity.components.assign(PositionComponent, {
-                radius: 75
+                radius: 75,
+                x: -500,
+                y: -500
             });
 
             this.playerShipEntity.components.assign(CollisionComponent, {
@@ -94,13 +99,12 @@ define([
             this.player2.fireTimer -= dt;
             this.invincibility -= dt;
 
-            if (this.invincibility && !this.shield) {
-                this.spawnShield();
+            if (this.invincibility > 0) {
+            }
+            else {
+
             }
 
-            if (this.invincibility <= 0 && this.shield) {
-                this.despawnShield();
-            }
 
             var da1 = 0,
                 da2 = 0,
@@ -155,12 +159,6 @@ define([
             this.position.dx += ax;
             this.position.dy += ay;
 
-            if (this.shield) {
-                var shieldPos = this.shield.components(PositionComponent);
-                shieldPos.dx += ax;
-                shieldPos.dy += ay;
-            }
-
             if (this.player1.fire && this.player1.fireTimer <= 0) {
                 this.player1.fireTimer = 1000 / this.playerConfig.rateOfFire;
                 this.events.emit('fire', {
@@ -182,29 +180,6 @@ define([
 
         'input event': function (player, action, state) {
             this[player][action] = state;
-        },
-
-        spawnShield: function(x, y) {
-
-            if (this.shield) {
-                return;
-            }
-
-            var shieldEntity = this.entities.add('Shield');
-
-            shieldEntity.components.assign(ShieldComponent, {});
-
-            shieldEntity.components.assign(PositionComponent, {
-                x: x,
-                y: y
-            });
-
-            this.shield = shieldEntity;
-        },
-
-        despawnShield: function() {
-            this.entities.remove(this.shield);
-            this.shield = null;
         }
 
     });
