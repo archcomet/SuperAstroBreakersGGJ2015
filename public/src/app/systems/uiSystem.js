@@ -118,11 +118,11 @@ define([
         'playerLife event': function (score) {
             this._lifeElement.textContent = score;
         },
-        'bomb event': function (bomb) {
+        'loadBomb event': function (bomb) {
             this._bombElement.textContent = bomb;
         },
 
-        'bombFire event': function (bomb) {
+        'decreseBombCount event': function (bomb) {
         this._bombElement.textContent -=  1 ;
     },
         'input event': function (player, name, pressed) {

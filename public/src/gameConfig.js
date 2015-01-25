@@ -75,5 +75,11 @@ define({
     scene: {
         starCount: 3000
     },
+
+    blackhole: {
+        radius: 300,
+        speed: 100
+    },
+
     rockBonus: 10
 });
