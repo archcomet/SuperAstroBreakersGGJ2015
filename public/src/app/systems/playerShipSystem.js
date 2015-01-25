@@ -20,7 +20,9 @@ define([
                 rotateLeft: false,
                 forward: false,
                 fire: false,
-                fireTimer: 0
+                bomb: false,
+                fireTimer: 0,
+                bombTimer: 0
             };
 
             this.player2 = {
@@ -28,9 +30,12 @@ define([
                 rotateLeft: false,
                 forward: false,
                 fire: false,
-                fireTimer: 0
+                bomb: false,
+                fireTimer: 0,
+                bombTimer: 0
             };
 
+            this.bombCount = 0;
             this.isThrusting = false;
             this.emitThrustSound = false;
             this.playerDied = false;
@@ -43,6 +48,12 @@ define([
 
         'player spawn event': function() {
             this.spawnPlayer();
+        },
+
+        'Player.Pickup event': function (color) {
+            if (color.toLowerCase() === 'blue') {
+                this.invincibility  = 3000;
+            }
         },
 
         collisionStartHandler: function(player, otherObject) {
@@ -81,8 +92,11 @@ define([
 
             this.player1.fireTimer = 0;
             this.player2.fireTimer = 0;
+            this.player1.bombTimer = 0;
+            this.player2.bombTimer = 0;
             this.playerDied = false;
             this.invincibility = 3000;
+            this.bombCount = 3;
         },
 
         update: function(entities, events, dt) {
@@ -97,14 +111,15 @@ define([
 
             this.player1.fireTimer -= dt;
             this.player2.fireTimer -= dt;
+            this.player1.bombTimer -= dt;
+            this.player2.bombTimer -= dt;
             this.invincibility -= dt;
 
-            if (this.invincibility > 0) {
+            if (this.invincibility > 0 && !this.ship.glow.visible) {
+                this.ship.glow.visible = true;
+            } else if (this.invincibility <= 0 && this.ship.glow.visible) {
+                this.ship.glow.visible = false;
             }
-            else {
-
-            }
-
 
             var da1 = 0,
                 da2 = 0,
@@ -175,6 +190,27 @@ define([
                     position: this.position,
                     angle: this.ship.player2.rotation.z
                 });
+            }
+
+            if (this.player1.bomb && this.player1.bombTimer <= 0 && this.bombCount > 0) {
+                this.player1.bombTimer = 1000 / this.playerConfig.bombRateOffFire;
+                this.events.emit('bomb', {
+                    color: this.playerConfig.color1,
+                    position: this.position
+                });
+                this.player1.bomb = false;
+                this.bombCount--;
+            }
+
+            if (this.player2.bomb && this.player2.bombTimer <= 0 && this.bombCount > 0) {
+                this.player2.bombTimer = 1000 / this.playerConfig.bombRateOffFire;
+                this.events.emit('bomb', {
+                    color: this.playerConfig.color2,
+                    position: this.position
+                });
+
+                this.player2.bomb = false;
+                this.bombCount--;
             }
         },
 

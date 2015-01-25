@@ -20,6 +20,8 @@ define([
             this._bombElement = document.getElementById('bombValue');
 
             this._events = events;
+            this._tweenTime = 2500;
+            this._muted = false;
 
             var self = this;
 
@@ -28,16 +30,17 @@ define([
             });
 
             document.getElementById("toggleMute").addEventListener("click", function() {
-                var elm = document.getElementById("toggleMute");
-                if (elm.textContent.indexOf("not") == -1)
+                var elm = document.getElementById("toggleMute"),
+                    muted = elm.textContent.indexOf("not") == -1;
+                if (muted)
                 {
                     self._events.emit('unMuteAll');
-                    elm.textContent = "Is not Muted."
                 }
                 else{
                     self._events.emit('muteAll');
-                    elm.textContent = "Is Muted.";
                 }
+
+                this._updateMuteText(muted);
 
             });
 
@@ -53,17 +56,26 @@ define([
         },
 
         startScreenTween: function () {
-            var message = document.getElementById('intro'),
-                position = { x: 0, y: 0 };
+            var intro = document.querySelector('.Intro'),
+                rotation = { r:-Math.PI/4 };
 
-            var tween = new Tween.Tween( position )
-                .to( { x: 0, y: 75 }, 1500)
-                .easing( Tween.Easing.Sinusoidal.Out)
-                .onUpdate( function () {
-                    message.style.transform = 'translateY(' + position.y + 'px)';
+            var tweenLeft = new Tween.Tween( rotation )
+                .to( { r:Math.PI/4 }, this._tweenTime)
+                .easing ( Tween.Easing.Elastic.InOut )
+                .onUpdate ( function () {
+                    intro.style.transform = 'rotateX(' + rotation.r + 'rad)';
                 });
 
-            tween.start();
+            var tweenRight = new Tween.Tween( rotation )
+                .to( { r:-Math.PI/4 }, this._tweenTime)
+                .easing ( Tween.Easing.Elastic.InOut )
+                .onUpdate ( function () {
+                intro.style.transform = 'rotateX(' + rotation.r + 'rad)';
+                })
+                .chain(tweenLeft);
+
+            tweenLeft.chain(tweenRight);
+            tweenLeft.start();
         },
 
         'screen start event': function() {
@@ -113,11 +125,36 @@ define([
         'bombFire event': function (bomb) {
         this._bombElement.textContent -=  1 ;
     },
-        'menuSelection event' : function() {
+        'input event': function (player, name, pressed) {
+            if (name === 'start' && pressed) {
+                if(this._header.style.display != 'block' )
+                {
+                    this._events.emit('begin play');
+                }
+                return;
+            }
 
-            if(this._header.style.display != 'block' )
+            if (name === 'select' && pressed) {
+                this._updateMuteText(this._muted);
+
+                if (this._muted) {
+                    this._muted = false;
+                    this._events.emit('unMuteAll');
+                } else {
+                    this._muted = true;
+                    this._events.emit('muteAll');
+                }
+            }
+        },
+
+        _updateMuteText: function (muted) {
+            var elm = document.getElementById("toggleMute");
+            if (muted)
             {
-                this._events.emit('begin play');
+                elm.textContent = "Is not Muted."
+            }
+            else{
+                elm.textContent = "Is Muted.";
             }
         }
 

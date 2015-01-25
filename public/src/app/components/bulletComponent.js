@@ -10,7 +10,7 @@ define([
         init: function(entity, options) {
             this._super(entity, options);
 
-            var geometry = new THREE.SphereGeometry(options.radius);
+            var geometry = new THREE.SphereGeometry(options.radius, 8, 8);
             var material = new THREE.MeshBasicMaterial({ color: options.color });
             this.mesh = new THREE.Mesh(geometry, material);
             this.duration = options.duration;
