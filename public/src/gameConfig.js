@@ -4,11 +4,13 @@ define({
     assetDirectory: '../public/src/assets/',
 
     player: {
+        bombCount: 3,
+        bombRateOffFire: 0.75,
         rateOfFire: 10,
         angularVelocity: 7,
         linearAcceleration: 20,
         color1: 0xffff00,
-        color2: 0xff00ff
+        color2: 0x00ffff
     },
     sounds: [
 
@@ -50,7 +52,7 @@ define({
     ],
 
     rocks: {
-        maxLinearSpeed: 1000,
+        maxLinearSpeed: 700,
         maxAngularSpeed: 10,
         minSplitRadius: 50,
         radiusSpeedModifier: 50,
@@ -59,7 +61,8 @@ define({
 
     bullets: {
         radius: 10,
-        speed: 2000,
+        superRadius: 25,
+        speed: 3000,
         duration: 1000
     },
 
@@ -71,5 +74,11 @@ define({
     scene: {
         starCount: 3000
     },
+
+    blackhole: {
+        radius: 300,
+        speed: 100
+    },
+
     rockBonus: 10
 });
