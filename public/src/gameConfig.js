@@ -30,15 +30,19 @@ define({
          */
         {fileName:'sfx/ShotStd.mp3', name:'shotStd'},
         //0common
+        {fileName:'sfx/BigWeapon.mp3', name:'shotAOE'},
+        //0common
         {fileName:'sfx/Thrust.mp3', name:'thrust', gain:.75, loop:true},
         //0common
         {fileName:'sfx/Chain.mp3', name:'chain'},
+        //0common
+        {fileName:'sfx/SuckedIn.mp3', name:'blackHole'},
         //0common
         {fileName:'sfx/Help.mp3', name:'sayHelp'},
         //0common
         {fileName:'sfx/PowerUp.mp3', name:'showPowerUp'},
         //0common
-        {fileName:'sfx/PickUp.mp3', name:'powerUp'},
+        {fileName:'sfx/PickUp.mp3', name:'powerUp', gain:1.25},
         //0common
         {fileName:'sfx/Explode.mp3', name:'explode'},
         /*
@@ -61,7 +65,7 @@ define({
 
     bullets: {
         radius: 10,
-        superRadius: 25,
+        superRadius: 50,
         speed: 3000,
         duration: 1000
     },

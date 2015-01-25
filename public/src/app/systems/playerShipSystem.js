@@ -1,11 +1,12 @@
 define([
     'cog',
+    'tween',
     'components/playerShipComponent',
     'components/positionComponent',
     'components/collisionComponent',
     'components/shieldComponent'
 
-], function(cog, PlayerShipComponent, PositionComponent, CollisionComponent, ShieldComponent) {
+], function(cog, Tween, PlayerShipComponent, PositionComponent, CollisionComponent, ShieldComponent) {
 
     var PlayerShipSystem = cog.System.extend('astro.PlayerShipSystem', {
 
@@ -164,7 +165,7 @@ define([
 
             if (this.isThrusting && !this.emitThrustSound)
             {
-                this.events.emit('thrust');
+                this.events.emit('thrust', [1]);
                 this.emitThrustSound = true;
             }
             else if ( !this.isThrusting && this.emitThrustSound){
@@ -199,6 +200,7 @@ define([
                     color: this.playerConfig.color1,
                     position: this.position
                 });
+                this.events.emit('decreseBombCount');
                 this.player1.bomb = false;
                 this.bombCount--;
             }
