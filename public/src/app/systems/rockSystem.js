@@ -1,11 +1,12 @@
 define([
     'cog',
+    'math',
     'components/rockComponent',
     'components/positionComponent',
     'components/cameraComponent',
     'components/collisionComponent'
 
-], function(cog, RockComponent, PositionComponent, CameraComponent, CollisionComponent) {
+], function(cog, math, RockComponent, PositionComponent, CameraComponent, CollisionComponent) {
 
     var RockSystem = cog.System.extend('astro.RockSystem', {
 
@@ -17,12 +18,19 @@ define([
             this.cameraComponent = entities.withTag('camera')[0].components(CameraComponent);
             this.rocks = [];
             this.rocksToDestroy = [];
+            this.spawnNext = 3000;
         },
 
         update: function(entities, events, dt) {
-            var rock;
+            var rock, radius;
             while(rock = this.rocksToDestroy.pop()) {
                 this.breakRock(rock);
+            }
+
+            if (--this.spawnNext < 0) {
+                radius  = math.randomNumber(400, 50);
+                this.spawnRandomRock(radius);
+                this.spawnNext = this.rocks.length * 100;
             }
         },
 

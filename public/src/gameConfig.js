@@ -68,7 +68,8 @@ define({
 
     pickUps: {
         spawnTime: 10000,
-        duration: 11000
+        duration: 10000,
+        invincibility: 8000
     },
 
     scene: {
