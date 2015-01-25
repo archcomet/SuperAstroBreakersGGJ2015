@@ -35,6 +35,7 @@
         'systems/rockSystem',
         'systems/blackholeSystem',
         'systems/playerShipSystem',
+        'systems/soundSystem',
         'systems/bulletSystem',
         'systems/uiSystem',
         'systems/pickUpSystem'
@@ -50,6 +51,7 @@
                 RockSystem,
                 BlackholeSystem,
                 PlayerShipSystem,
+                SoundSystem,
                 BulletSystem,
                 UISystem,
                 PickUpSystem
@@ -64,6 +66,7 @@
         var game = cog.createDirector(gameConfig);
 
         game.systems.add(THREERenderSystem);
+        game.systems.add(SoundSystem);
         game.systems.add(InputSystem);
         game.systems.add(GameStateSystem);
         game.systems.add(PositionSystem);

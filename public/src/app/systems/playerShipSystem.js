@@ -31,6 +31,8 @@ define([
                 fireTimer: 0
             };
 
+            this.isThrusting = false;
+            this.emitThrustSound = false;
             this.playerDied = false;
             this.invincibility = 1000;
         },
@@ -58,6 +60,9 @@ define([
                 this.entities.remove(this.playerShipEntity);
                 this.playerShipEntity = null;
                 this.events.emit('player died');
+                this.events.emit('stopSound', 'thrust');
+                this.events.emit('explode');
+
             }
         },
 
@@ -122,8 +127,8 @@ define([
                 da2 += this.playerConfig.angularVelocity;
             }
 
-            this.ship.player1.rotation.z += da1 * (dt/1000);
-            this.ship.player2.rotation.z += da2 * (dt/1000);
+            this.ship.player1.rotation.z += da1 * (dt / 1000);
+            this.ship.player2.rotation.z += da2 * (dt / 1000);
 
             if (this.player1.forward) {
                 ax += Math.cos(this.ship.player1.rotation.z) * this.playerConfig.linearAcceleration;
@@ -133,6 +138,22 @@ define([
             if (this.player2.forward) {
                 ax += Math.cos(this.ship.player2.rotation.z) * this.playerConfig.linearAcceleration;
                 ay += Math.sin(this.ship.player2.rotation.z) * this.playerConfig.linearAcceleration;
+            }
+
+            if ((this.player1.forward || this.player2.forward) && !this.isThrusting) {
+                this.isThrusting = true;
+            } else if (!this.player1.forward && !this.player2.forward){
+                this.isThrusting = false;
+            }
+
+            if (this.isThrusting && !this.emitThrustSound)
+            {
+                this.events.emit('thrust');
+                this.emitThrustSound = true;
+            }
+            else if ( !this.isThrusting && this.emitThrustSound){
+                this.emitThrustSound = false;
+                this.events.emit('stopSound', 'thrust');
             }
 
             this.position.dx += ax;
