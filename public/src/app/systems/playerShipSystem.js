@@ -164,7 +164,7 @@ define([
 
             if (this.isThrusting && !this.emitThrustSound)
             {
-                this.events.emit('thrust');
+                this.events.emit('thrust', [1]);
                 this.emitThrustSound = true;
             }
             else if ( !this.isThrusting && this.emitThrustSound){

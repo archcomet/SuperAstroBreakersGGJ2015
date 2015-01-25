@@ -29,6 +29,7 @@ define([
 
         spawnPickUp: function() {
 
+            this.events.emit("playSound", "showPowerUp")
             var pickUpEntity = this.entities.add('PickUp');
 
             var x = cog.rand.arc4rand(-this.cameraComponent.visibleWidth / 2, this.cameraComponent.visibleWidth / 2),
@@ -57,7 +58,9 @@ define([
 
         collisionHandler: function (pickup, other) {
             var pickUpComponent = pickup.components(PickUpComponent);
+
             if (other.tag === 'PlayerShip') {
+                this.events.emit("playSound", "powerUp")
                 pickUpComponent.duration = 0;
                 this.events.emit('Player.Pickup', pickUpComponent.color.name);
             } else if (other.tag === 'Blackhole') {
