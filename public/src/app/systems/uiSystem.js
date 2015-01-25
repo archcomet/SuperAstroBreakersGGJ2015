@@ -1,9 +1,10 @@
 
 
 define([
-    'cog'
+    'cog',
+    'tween'
 
-], function(cog) {
+], function(cog, Tween) {
 
     var UISystem = cog.System.extend('astro.UISystem', {
 
@@ -24,10 +25,29 @@ define([
             document.getElementById("start").addEventListener("click", function() {
                 self._events.emit('begin play');
             });
-
             document.getElementById("replay").addEventListener("click", function() {
                 self._events.emit('begin play');
             });
+
+            this.startScreenTween();
+        },
+
+        update: function () {
+            Tween.update();
+        },
+
+        startScreenTween: function () {
+            var message = document.getElementById('intro'),
+                position = { x: 0, y: 0 };
+
+            var tween = new Tween.Tween( position )
+                .to( { x: 0, y: 75 }, 1500)
+                .easing( Tween.Easing.Sinusoidal.Out)
+                .onUpdate( function () {
+                    message.style.transform = 'translateY(' + position.y + 'px)';
+                });
+
+            tween.start();
         },
 
         'screen start event': function() {
