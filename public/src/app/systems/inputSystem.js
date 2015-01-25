@@ -111,6 +111,7 @@ define([
             var pressed = (event.type !== 'keyup'),
                 player, action;
 
+            window.console.log(event.keyCode);
             switch (event.keyCode) {
 // up (w, up arrow)
                 case 87: {
@@ -132,6 +133,18 @@ define([
                 case 191: {
                     player = 'player2';
                     action = 'fire';
+                    break;
+                }
+// bomb (r, .)
+                case 82: {
+                    player = 'player1';
+                    action = 'bomb';
+                    break;
+                }
+
+                case 190: {
+                    player = 'player2';
+                    action = 'bomb';
                     break;
                 }
 // left (a, left arrow)

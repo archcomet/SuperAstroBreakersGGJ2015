@@ -4,11 +4,13 @@ define({
     assetDirectory: '../public/src/assets/',
 
     player: {
+        bombCount: 3,
+        bombRateOffFire: 0.75,
         rateOfFire: 10,
         angularVelocity: 7,
         linearAcceleration: 20,
         color1: 0xffff00,
-        color2: 0xff00ff
+        color2: 0x00ffff
     },
     sounds: [
 
@@ -59,6 +61,7 @@ define({
 
     bullets: {
         radius: 10,
+        superRadius: 25,
         speed: 3000,
         duration: 1000
     },

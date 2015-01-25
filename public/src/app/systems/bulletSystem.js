@@ -44,12 +44,12 @@ define([
             }
         },
 
-        spawnBullet: function(color, x, y, angle) {
+        spawnBullet: function(color, x, y, angle, radius) {
 
             var bulletEntity = this.entities.add('Bullet');
 
             bulletEntity.components.assign(BulletComponent, {
-                radius: this.bulletConfig.radius,
+                radius: radius,
                 color: color,
                 spawnX: x,
                 spawnY: y,
@@ -61,7 +61,7 @@ define([
                 dy = Math.sin(angle) * this.bulletConfig.speed;
 
             bulletEntity.components.assign(PositionComponent, {
-                radius: this.bulletConfig.radius,
+                radius: radius,
                 x: x,
                 y: y,
                 dx: dx,
@@ -107,7 +107,14 @@ define([
         },
 
         'fire event': function(options) {
-            this.spawnBullet(options.color, options.position.x, options.position.y, options.angle);
+            this.spawnBullet(options.color, options.position.x, options.position.y, options.angle, this.bulletConfig.radius);
+        },
+
+        'bomb event': function(options) {
+            var i = 0, n = 30;
+            for (; i < n; ++i) {
+                this.spawnBullet(options.color, options.position.x, options.position.y, i/n * Math.PI*2, this.bulletConfig.superRadius);
+            }
         }
 
     });
