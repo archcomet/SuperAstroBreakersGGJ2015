@@ -21,7 +21,7 @@ define([
             this._events.emit('begin play');
         },
 
-        'game rockCollision event': function () {
+        'player died event': function () {
             if (this._state !== State.STARTED) {
                 return;
             }
@@ -31,8 +31,6 @@ define([
             this._setNagText(this._playerLife);
 
             this._events.emit('playerLife', this._playerLife);
-
-            this._events.emit('player destroy');
 
             if (this._playerLife <= 0) {
                 this._state = State.STOPPED;

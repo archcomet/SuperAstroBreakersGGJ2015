@@ -29,18 +29,13 @@ define([
                 fire: false,
                 fireTimer: 0
             };
+
+            this.playerDied = false;
+            this.invincibility = 1000;
         },
 
         'begin play event': function() {
             this.spawnPlayer();
-        },
-
-        'end play event': function() {
-            this.destroyPlayer();
-        },
-
-        'player destroy event': function() {
-            this.destroyPlayer();
         },
 
         'player spawn event': function() {
@@ -48,10 +43,8 @@ define([
         },
 
         collisionStartHandler: function(player, otherObject) {
-            console.log('hit: ' + otherObject.tag);
-
-            if (otherObject.tag === 'Rock') {
-                this.events.emit('game rockCollision');
+            if (otherObject.tag === 'Rock' && this.invincibility <= 0) {
+                this.playerDied = true;
             }
         },
 
@@ -59,6 +52,7 @@ define([
             if (this.playerShipEntity) {
                 this.entities.remove(this.playerShipEntity);
                 this.playerShipEntity = null;
+                this.events.emit('player died');
             }
         },
 
@@ -75,9 +69,15 @@ define([
 
             this.player1.fireTimer = 0;
             this.player2.fireTimer = 0;
+            this.playerDied = false;
+            this.invincibility = 1000;
         },
 
         update: function(entities, events, dt) {
+
+            if (this.playerDied) {
+                this.destroyPlayer();
+            }
 
             if (!this.playerShipEntity) {
                 return;
@@ -85,6 +85,7 @@ define([
 
             this.player1.fireTimer -= dt;
             this.player2.fireTimer -= dt;
+            this.invincibility -= dt;
 
             var da1 = 0,
                 da2 = 0,
