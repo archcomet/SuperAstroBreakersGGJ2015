@@ -71,7 +71,7 @@ define([
                     break;
                 }
                 case 2: {
-                    this._countdownFinalText = 'Need a vacuum for all this dust';
+                    this._countdownFinalText = 'Avoid the giant space vacuum';
                     break;
                 }
                 case 1: {
