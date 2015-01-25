@@ -2,30 +2,28 @@ define([
     'cog'
 ], function (cog) {
 
-    var CollisionBodyComponent = cog.Component.extend('astro-CollisionBodyComponent', {
-        positionIsDirty: true
-    }, {
+    var CollisionComponent = cog.Component.extend('astro-CollisionComponent', {
 
         defaults: {
-            x: 0.0,
-            y: 0.0,
-
-            // initial values
             body: null,
-            density: 0.0,
-            friction: 0.2,
-            restitution: 0.0,
-            angularDamping: 0.0,
-            fixedRotation: false,
-            categoryBits: 0x0001,
-            maskBits: 0xFFFF,
-            shapeType: 'circle', //polygon
+            shapeType: 'circle',
             shapeConfig: null
+        },
+
+        init: function (entity, options) {
+            options             = options || {};
+            this.x              = options.x || 0;
+            this.y              = options.y || 0;
+            this.density        = options.density || 0;
+            this.friction       = options.friction || 0.2;
+            this.restitution    = options.restitution || 0;
+            this.categoryBits   = options.categoryBits || 0x0001;
+            this.maskBits       = options.maskBits || 0xFFFF;
         }
 
     });
 
-    astro.CollisionBodyComponent = CollisionBodyComponent;
+    astro.CollisionComponent = CollisionComponent;
 
-    return CollisionBodyComponent;
+    return CollisionComponent;
 });

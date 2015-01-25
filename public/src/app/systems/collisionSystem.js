@@ -1,9 +1,11 @@
 define([
     'cog',
     'box2d',
-    'components/collisionComponent'
+    'components/collisionComponent',
+    'components/positionComponent',
+    'components/playerShipComponent'
 
-], function(cog, Box2D, CollisionComponent) {
+], function(cog, Box2D, CollisionComponent, PositionComponent, PlayerShipComponent) {
     'use strict';
 
     var b2Vec2 = Box2D.Common.Math.b2Vec2,
@@ -11,7 +13,6 @@ define([
         b2Body = Box2D.Dynamics.b2Body,
         b2FixtureDef = Box2D.Dynamics.b2FixtureDef,
         b2World = Box2D.Dynamics.b2World,
-        b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape,
         b2CircleShape = Box2D.Collision.Shapes.b2CircleShape,
         b2KinematicBody = Box2D.Dynamics.b2Body.b2_kinematicBody;
 
@@ -36,14 +37,10 @@ define([
         },
 
         update: function(entityManager, eventManager, dt) {
-            var entityList = entityManager.withComponents(CollisionComponent),
+            var entityList = entityManager.withComponents(CollisionComponent, PositionComponent),
                 i, n = entityList.length;
 
             if (this.collisionEnabled) {
-                for (i = 0; i < n; ++i) {
-                    this.fixDirtyBody(entityList[i]);
-                }
-
                 this.updateWorld();
 
                 for (i = 0; i < n; ++i) {
@@ -62,25 +59,24 @@ define([
         },
 
         updateBodyPosition: function (entity) {
+            var collision = entity.components(CollisionComponent),
+                position = entity.components(PositionComponent);
 
-        },
+//            if (entity.components(PlayerShipComponent)) {
+                console.log(entity.tag, 'Pos: [', position.x, position.y, '] Col: [', collision.x, collision.y, ']');
+//            }
 
-        fixDirtyBody: function (entity) {
-            var physicsComponent = entity.components(CollisionComponent);
+            collision.x = position.x/20;
+            collision.y = position.y/20;
 
-            if (physicsComponent.positionIsDirty) {
-                physicsComponent.body.SetPosition({
-                    x: physicsComponent.x,
-                    y: physicsComponent.y
-                });
-                physicsComponent.positionIsDirty = false;
-            }
+            collision.body.SetPosition({
+                x: collision.x,
+                y: collision.y
+            });
         },
 
         createBody: function (collisionComponent, entity) {
-            var shapeType               = collisionComponent.shapeType,
-                shapeConfig             = collisionComponent.shapeConfig;
-
+            var shapeConfig             = collisionComponent.shapeConfig;
             var bodyDef                 = new b2BodyDef();
             bodyDef.type                = b2KinematicBody;
             bodyDef.position.Set(0, 0);
@@ -91,15 +87,8 @@ define([
             fixDef.density              = collisionComponent.density;
             fixDef.friction             = collisionComponent.friction;
             fixDef.restitution          = collisionComponent.restitution;
-            fixDef.shape                = new (shapeType === 'circle' ? b2CircleShape : b2PolygonShape)();
-
-            if (shapeType === 'circle') {
-                fixDef.shape.SetRadius( shapeConfig.radius );
-            } else {
-                if (shapeConfig.isBox) {
-                    fixDef.shape.SetAsBox(shapeConfig.width, shapeConfig.height);
-                }
-            }
+            fixDef.shape                = new b2CircleShape();
+            fixDef.shape.SetRadius( shapeConfig.radius );
 
             var body = this.world.CreateBody(bodyDef);
             body.CreateFixture(fixDef);
@@ -107,15 +96,14 @@ define([
             return body;
         },
 
-        addCollision: function (entity, shapeType, shapeConfig) {
+        addCollision: function (entity, shapeConfig) {
             var collision           = entity.components.assign(CollisionComponent);
-            collision.shapeType     = shapeType;
             collision.shapeConfig   = shapeConfig;
             collision.body          = this.createBody(collision, entity);
-
         },
 
         removeCollision: function (entity) {
+            this.world.DestroyBody(entity.components(CollisionComponent).body);
             entity.components.remove(CollisionComponent);
         },
 
@@ -127,12 +115,12 @@ define([
             console.log('hit!!!');
         },
 
-        'Collision.Add event': function (entity, shape, shapeConfig) {
+        'Collision.Add event': function (entity, shapeConfig) {
             if (entity.components(CollisionComponent)) {
                 this.removeCollision(entity);
             }
 
-            this.addCollision(entity, shape, shapeConfig);
+            this.addCollision(entity, shapeConfig);
         },
 
         'Collision.Remove event': function (entity) {

@@ -39,7 +39,7 @@ define([
                 dy: cog.rand.arc4rand(-this.rockSpeedMax, this.rockSpeedMax)
             });
 
-            this.events.emit('Collision.Add', rockEntity, 'circle', { radius: 200 });
+            this.events.emit('Collision.Add', rockEntity, { radius: 200 });
 
             return rockEntity;
         }

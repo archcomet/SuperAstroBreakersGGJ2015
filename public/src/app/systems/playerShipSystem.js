@@ -36,7 +36,7 @@ define([
             this.ship = this.playerShipEntity.components.assign(PlayerShipComponent);
             this.position = this.playerShipEntity.components.assign(PositionComponent);
 
-            this.events.emit('Collision.Add', this.playerShipEntity, 'polygon', { isBox: true, width: 1, height: 1 });
+            this.events.emit('Collision.Add', this.playerShipEntity, { radius: 100 });
         },
 
         update: function(entities, events, dt) {
