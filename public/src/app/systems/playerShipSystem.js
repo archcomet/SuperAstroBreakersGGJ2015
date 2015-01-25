@@ -38,6 +38,14 @@ define([
             this.destroyPlayer();
         },
 
+        'player destroy event': function() {
+            this.destroyPlayer();
+        },
+
+        'player spawn event': function() {
+            this.spawnPlayer();
+        },
+
         destroyPlayer: function() {
             if (this.playerShipEntity) {
                 this.entities.remove(this.playerShipEntity);
