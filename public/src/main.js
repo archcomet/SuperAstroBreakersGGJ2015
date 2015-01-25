@@ -69,6 +69,7 @@
         game.start();
 
         game.events.emit('screen start');
+
         astro.game = game;
     });
 

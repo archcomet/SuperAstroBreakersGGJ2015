@@ -7,51 +7,57 @@ define([
 
     var UISystem = cog.System.extend('astro.UISystem', {
 
-        configure: function () {
+        configure: function (entities, events) {
             this._menu = document.getElementById('menu');
             this._header = document.getElementById('header');
             this._end = document.getElementById('end');
             this._webGLContainer = document.getElementById('webGLContainer');
 
+            this._scoreElement = document.getElementById('scoreValue');
+            this._lifeElement = document.getElementById('lifeValue');
+
+            this._events = events;
+
+            var self = this;
+
+            document.getElementById("start").addEventListener("click", function() {
+                self._events.emit('game start');
+            });
+
+            document.getElementById("replay").addEventListener("click", function() {
+                self._events.emit('game start');
+            });
         },
 
-        gameTime: function() {
-            this._menu.style.display = 'none';
-            this._header.style.display = 'block';
-            this._end.style.display = 'none';
-            this._webGLContainer.style.display = 'block';
-
-        },
-        start : function () {
+        'screen start event': function() {
             this._menu.style.display = 'block';
             this._header.style.display = 'none';
             this._end.style.display = 'none';
             this._webGLContainer.style.display = 'none';
-
-
         },
-        end :function() {
+
+        'screen game event': function() {
+            this._menu.style.display = 'none';
+            this._header.style.display = 'block';
+            this._end.style.display = 'none';
+            this._webGLContainer.style.display = 'block';
+        },
+
+        'screen end event': function() {
             this._menu.style.display = 'none';
             this._header.style.display = 'none';
             this._end.style.display = 'block';
             this._webGLContainer.style.display = 'none';
+        },
 
+        'playerScore event': function (score) {
+            this._scoreElement.textContent = score;
+            console.log(score);
         },
-        'screen start event': function() {
-            this.start();
-            var self = this;
-            document.getElementById("start").addEventListener("click",
-                function() {
-                    self.gameTime();
-                }
 
-            );
-        },
-        'screen game event': function() {
-            this.gameTime();
-        },
-        'screen end event': function() {
-            this.end();
+        'playerLife event': function (score) {
+            this._lifeElement.textContent = score;
+            console.log(score);
         }
 
     });
