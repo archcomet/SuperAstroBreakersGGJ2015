@@ -33,6 +33,17 @@ define([
             this.spawnPlayer();
         },
 
+        'end play event': function() {
+            this.destroyPlayer();
+        },
+
+        destroyPlayer: function() {
+            if (this.playerShipEntity) {
+                this.entities.remove(this.playerShipEntity);
+                this.playerShipEntity = null;
+            }
+        },
+
         spawnPlayer: function() {
             this.playerShipEntity = this.entities.add('PlayerShip');
             this.ship = this.playerShipEntity.components.assign(PlayerShipComponent);
