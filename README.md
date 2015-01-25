@@ -12,26 +12,26 @@ Controls:
 
 Player 1:
 
-W - Move forward
-A - Rotate left
-D - Rotate right
-E - Fire cannon
+- W - Move forward
+- A - Rotate left
+- D - Rotate right
+- E - Fire cannon
 
 Player 2:
 
-Up arrow - Move forward
-Left arrow - Rotate left
-Right arrow - Rotate right
-/ - Fire cannon
+- Up arrow - Move forward
+- Left arrow - Rotate left
+- Right arrow - Rotate right
+- / - Fire cannon
 
 Or on a gamepad:
 
-Left stick Up - Move forward
-Left stick Left - Rotate left
-Left stick Right - Rotate right
-X button - Fire cannon
-Select - Toggle sound
-Start - Start game/try again
+- Left stick Up - Move forward
+- Left stick Left - Rotate left
+- Left stick Right - Rotate right
+- X button - Fire cannon
+- Select - Toggle sound
+- Start - Start game/try again
 
 Player 1 is the first gamepad connected, player 2 is the second gamepad.
 
