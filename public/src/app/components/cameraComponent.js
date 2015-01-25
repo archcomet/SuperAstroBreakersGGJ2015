@@ -28,9 +28,6 @@ define([
 
             this.visibleHeight = height;
             this.visibleWidth = width;
-
-            console.log(width, height);
-
         }
     });
 

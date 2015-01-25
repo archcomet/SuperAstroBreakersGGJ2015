@@ -13,7 +13,6 @@ define([
         configure: function(entities, events, config) {
 
             this.entities = entities;
-            this.spawnPlayer();
 
             this.player1 = {
                 rotateRight: false,
@@ -28,6 +27,10 @@ define([
                 forward: false,
                 fire: false
             };
+        },
+
+        'begin play event': function() {
+            this.spawnPlayer();
         },
 
         spawnPlayer: function() {
