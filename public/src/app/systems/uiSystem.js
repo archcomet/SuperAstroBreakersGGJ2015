@@ -20,6 +20,7 @@ define([
 
             this._events = events;
             this._tweenTime = 2500;
+            this._muted = false;
 
             var self = this;
 
@@ -115,11 +116,24 @@ define([
         'playerLife event': function (score) {
             this._lifeElement.textContent = score;
         },
-        'menuSelection event' : function() {
 
-            if(this._header.style.display != 'block' )
-            {
-                this._events.emit('begin play');
+        'input event': function (player, name, pressed) {
+            if (name === 'start' && pressed) {
+                if(this._header.style.display != 'block' )
+                {
+                    this._events.emit('begin play');
+                }
+                return;
+            }
+
+            if (name === 'select' && pressed) {
+                if (this._muted) {
+                    this._muted = false;
+                    this._events.emit('unMuteAll');
+                } else {
+                    this._muted = true;
+                    this._events.emit('muteAll');
+                }
             }
         }
 
