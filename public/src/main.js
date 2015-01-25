@@ -56,11 +56,13 @@
         game.systems.add(THREERenderSystem);
         game.systems.add(InputSystem);
         game.systems.add(PlayerShipSystem);
+        game.systems.add(UISystem);
 
         game.onBeginStep(function() { stats.begin(); });
         game.onEndStep(function() { stats.end(); });
         game.start();
 
+        game.events.emit('screen start');
         astro.game = game;
     });
 
