@@ -8,6 +8,7 @@ define([
     var RockComponent = THREEComponent.extend('astro.RockComponent', {
 
         init: function(entity, options) {
+            this._super(entity, options);
             options = options || {};
 
             var geometry = new THREE.SphereGeometry(options.radius, 5, 5);

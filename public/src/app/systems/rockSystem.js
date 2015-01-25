@@ -15,6 +15,8 @@ define([
             this.rocksConfig = config.rocks;
             this.cameraComponent = entities.withTag('camera')[0].components(CameraComponent);
             this.rocks = [];
+
+            window.breakRandomRock = this.breakRandomRock.bind(this);
         },
 
         'begin play event': function() {
@@ -62,16 +64,23 @@ define([
         },
 
         breakRock: function(rock) {
-
             var rockComponent = rock.components(RockComponent);
             if (rockComponent.radius > this.rocksConfig.minSplitRadius) {
 
 
             }
-
+            var i = this.rocks.indexOf(rock);
+            this.rocks.splice(i, 1);
             this.entities.remove(rock);
-        }
+        },
 
+        breakRandomRock: function() {
+            var rock, n = this.rocks.length;
+            if (n > 0) {
+                rock = this.rocks[cog.rand.arc4randInt(1, n) - 1];
+                this.breakRock(rock);
+            }
+        }
     });
 
     astro.RockSystem = RockSystem;
