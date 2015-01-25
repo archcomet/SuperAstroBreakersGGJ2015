@@ -18,7 +18,6 @@ define([
         'game start event': function () {
             this._resetStats();
             this._state = State.STARTED;
-            this._events.emit('screen game');
             this._events.emit('begin play');
         },
 
@@ -33,7 +32,7 @@ define([
 
             if (this._playerLife <= 0) {
                 this._state = State.STOPPED;
-                this._events.emit('screen end');
+                this._events.emit('end play');
             }
         },
 

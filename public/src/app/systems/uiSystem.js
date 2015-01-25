@@ -36,14 +36,14 @@ define([
             this._webGLContainer.style.display = 'none';
         },
 
-        'screen game event': function() {
+        'begin play event': function() {
             this._menu.style.display = 'none';
             this._header.style.display = 'block';
             this._end.style.display = 'none';
             this._webGLContainer.style.display = 'block';
         },
 
-        'screen end event': function() {
+        'end play event': function() {
             this._menu.style.display = 'none';
             this._header.style.display = 'none';
             this._end.style.display = 'block';
@@ -52,17 +52,13 @@ define([
 
         'playerScore event': function (score) {
             this._scoreElement.textContent = score;
-            console.log(score);
         },
 
         'playerLife event': function (score) {
             this._lifeElement.textContent = score;
-            console.log(score);
         }
 
     });
-
-
 
     astro.UISystem = UISystem;
 
