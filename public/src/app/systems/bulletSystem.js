@@ -44,7 +44,7 @@ define([
             }
         },
 
-        spawnBullet: function(color, x, y, angle, radius) {
+        spawnBullet: function(color, x, y, angle, radius, useGlow) {
 
             var bulletEntity = this.entities.add('Bullet');
 
@@ -54,7 +54,8 @@ define([
                 spawnX: x,
                 spawnY: y,
                 spawnRZ: angle,
-                duration: this.bulletConfig.duration
+                duration: this.bulletConfig.duration,
+                useGlow: useGlow
             });
 
             var dx = Math.cos(angle) * this.bulletConfig.speed,
@@ -107,13 +108,13 @@ define([
         },
 
         'fire event': function(options) {
-            this.spawnBullet(options.color, options.position.x, options.position.y, options.angle, this.bulletConfig.radius);
+            this.spawnBullet(options.color, options.position.x, options.position.y, options.angle, this.bulletConfig.radius, true);
         },
 
         'bomb event': function(options) {
             var i = 0, n = 30;
             for (; i < n; ++i) {
-                this.spawnBullet(options.color, options.position.x, options.position.y, i/n * Math.PI*2, this.bulletConfig.superRadius);
+                this.spawnBullet(options.color, options.position.x, options.position.y, i/n * Math.PI*2, this.bulletConfig.superRadius, false);
             }
         }
 
