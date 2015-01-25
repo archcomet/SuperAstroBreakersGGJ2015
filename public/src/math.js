@@ -29,6 +29,10 @@ define(function() {
                 x: v.x * invLength,
                 y: v.y * invLength
             };
+        },
+
+        randomNumber: function(high, low) {
+           return Math.floor((Math.random() * high) + low);
         }
     };
 
