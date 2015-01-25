@@ -14,10 +14,6 @@ define([
             this.bullets = [];
         },
 
-        'begin play event': function() {
-
-        },
-
         spawnBullet: function(radius, color, x, y, dx, dy) {
 
             var bulletEntity = this.entities.add('Bullet');
@@ -35,11 +31,15 @@ define([
             });
 
             this.bullets.push(bulletEntity);
+        },
+
+        'fire event': function() {
+            console.log(arguments);
         }
 
     });
 
-    astro.RockSystem = RockSystem;
+    astro.BulletSystem = BulletSystem;
 
-    return RockSystem;
+    return BulletSystem;
 });
