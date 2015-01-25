@@ -11,6 +11,7 @@ define([
         configure: function(entities, events, config) {
 
             this.entities = entities;
+            this.events = events;
             this.bulletConfig = config.bullets;
             this.bullets = [];
             this.bulletsToRemove = [];
@@ -79,6 +80,7 @@ define([
 
             if (other.tag === 'Rock') {
                 this.bulletsToRemove.push(bullet);
+                this.events.emit('rock destroyed');
             }
 
             if (other.tag === 'Blackhole') {

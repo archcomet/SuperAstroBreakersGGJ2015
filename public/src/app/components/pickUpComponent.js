@@ -11,10 +11,13 @@ define([
             this._super(entity, options);
             options = options || {};
 
+            this.color      = options.color || { value: 0x0000ff, name: 'blue' };
+            this.emissive   = options.emissive || 0x110033;
+
             var geometry = new THREE.SphereGeometry(options.radius, 5, 5);
             var material = new THREE.MeshPhongMaterial({
-                color: 0x0000ff,
-                emissive: 0x110033
+                color: this.color.value,
+                emissive: this.emissive
             });
 
             this.mesh = new THREE.Mesh(geometry, material);
