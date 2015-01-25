@@ -58,5 +58,13 @@ canvas {
     transform: translate(-50%, -50%);
 }
 
+.Title {
+    font-size: 60px;
+    text-align: center;
+    color: red;
+}
 
-
+.Instructions {
+    left: 0;
+    display: inline-block;
+}
