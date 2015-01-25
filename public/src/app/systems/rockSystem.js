@@ -18,7 +18,7 @@ define([
             this.cameraComponent = entities.withTag('camera')[0].components(CameraComponent);
             this.rocks = [];
             this.rocksToDestroy = [];
-            this.spawnNext = 3000;
+            this.spawnNext = 10000;
         },
 
         update: function(entities, events, dt) {
@@ -31,7 +31,7 @@ define([
             this.spawnNext -= dt;
             if (this.spawnNext < 0) {
                 this.spawnRandomRock(400);
-                this.spawnNext = 5000;
+                this.spawnNext = 6000;
             }
         },
 

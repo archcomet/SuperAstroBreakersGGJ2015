@@ -84,8 +84,8 @@ define([
             this.ship = this.playerShipEntity.components.assign(PlayerShipComponent);
             this.position = this.playerShipEntity.components.assign(PositionComponent, {
                 radius: 75,
-                x: -500,
-                y: -500
+                x: 0,
+                y: 0
             });
 
             this.playerShipEntity.components.assign(CollisionComponent, {

@@ -116,7 +116,6 @@ define([
             var pressed = (event.type !== 'keyup'),
                 player, action;
 
-            window.console.log(event.keyCode);
             switch (event.keyCode) {
 // up (w, up arrow)
                 case 87: {
