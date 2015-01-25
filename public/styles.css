@@ -70,6 +70,5 @@ canvas {
 }
 
 .Instructions {
-    left: 0;
-    display: inline-block;
+    position: relative;
 }
