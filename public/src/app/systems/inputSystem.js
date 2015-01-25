@@ -32,7 +32,8 @@ define([
                     rotateRight: false,
                     rotateLeft: false,
                     select: false,
-                    start: false
+                    start: false,
+                    bomb: false
                 },
                 player2: {
                     fire: false,
@@ -40,7 +41,8 @@ define([
                     rotateRight: false,
                     rotateLeft: false,
                     select: false,
-                    start: false
+                    start: false,
+                    bomb: false
                 }
             };
         },
@@ -79,6 +81,7 @@ define([
                 this._emitInputEventOnChange(playerState, padState, player, 'rotateLeft');
                 this._emitInputEventOnChange(playerState, padState, player, 'select');
                 this._emitInputEventOnChange(playerState, padState, player, 'start');
+                this._emitInputEventOnChange(playerState, padState, player, 'bomb');
             }
         },
 
@@ -96,7 +99,8 @@ define([
                 rotateRight: gamepad.axes[0] > 0.5,
                 rotateLeft: gamepad.axes[0] < -0.5,
                 select: gamepad.buttons[8].pressed,
-                start: gamepad.buttons[9].pressed
+                start: gamepad.buttons[9].pressed,
+                bomb: gamepad.buttons[1].pressed
             };
         },
 
