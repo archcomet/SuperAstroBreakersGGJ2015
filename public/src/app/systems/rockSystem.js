@@ -109,6 +109,7 @@ define([
 
             if (otherEntity.tag === 'Bullet') {
                 this.rocksToDestroy.push(rock);
+                this.events.emit('rock destroyed');
             }
 
             if (otherEntity.tag === 'Blackhole') {

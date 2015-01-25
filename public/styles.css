@@ -58,5 +58,10 @@ canvas {
     transform: translate(-50%, -50%);
 }
 
+#options {
+    position: absolute;
+    right: 10%;
+    z-index: 2;
+}
 
 
