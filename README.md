@@ -44,9 +44,9 @@ More info here:
 
 Credits:
 ---------
-* Michael Good - 
-* Ryan Larkyn - 
-* Dan -
-* Alex Tong -
-* John La Rosa - 
+* Michael Good - _Stack Overflow, I love you_ -
+* Ryan Larkyn - _Large rock collider_ -
+* Dan - _Seven frames per second, but it's f#$%&*@ working_ -
+* Alex Tong - _Maybe I need to pull first?_ -
+* John La Rosa - _Gotta beat our 4800 score!_ -
 * Chris Perryea -
