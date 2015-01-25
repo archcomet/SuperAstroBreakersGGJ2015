@@ -99,6 +99,7 @@ define([
             this.playerDied = false;
             this.invincibility = 3000;
             this.bombCount = 3;
+            this.events.emit('loadBomb', this.bombCount);
         },
 
         update: function(entities, events, dt) {
@@ -200,9 +201,9 @@ define([
                     color: this.playerConfig.color1,
                     position: this.position
                 });
-                this.events.emit('decreseBombCount');
                 this.player1.bomb = false;
                 this.bombCount--;
+                this.events.emit('loadBomb', this.bombCount);
             }
 
             if (this.player2.bomb && this.player2.bombTimer <= 0 && this.bombCount > 0) {
@@ -211,9 +212,9 @@ define([
                     color: this.playerConfig.color2,
                     position: this.position
                 });
-                this.events.emit('decreseBombCount');
                 this.player2.bomb = false;
                 this.bombCount--;
+                this.events.emit('loadBomb', this.bombCount);
             }
         },
 
