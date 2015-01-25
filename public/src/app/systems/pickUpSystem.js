@@ -20,19 +20,29 @@ define([
         'begin play event': function() {
             //this.spawnPickUp();
         },
+
+        'end play event': function() {
+            this.despawnAllPickUps();
+        },
+
         spawnPickUp: function() {
 
             var pickUpEntity = this.entities.add('PickUp');
 
+            var x = cog.rand.arc4rand(-this.cameraComponent.visibleWidth / 2, this.cameraComponent.visibleWidth / 2),
+                y = cog.rand.arc4rand(-this.cameraComponent.visibleHeight / 2, this.cameraComponent.visibleHeight / 2);
+
             pickUpEntity.components.assign(PickUpComponent, {
                 radius: 100,
-                duration: this.pickUpConfig.duration
+                duration: this.pickUpConfig.duration,
+                spawnX: x,
+                spawnY: y
             });
 
             pickUpEntity.components.assign(PositionComponent, {
                 radius: 100,
-                x: cog.rand.arc4rand(-this.cameraComponent.visibleWidth / 2, this.cameraComponent.visibleWidth / 2),
-                y: cog.rand.arc4rand(-this.cameraComponent.visibleHeight / 2, this.cameraComponent.visibleHeight / 2)
+                x: x,
+                y: y
             });
             this.pickUps.push(pickUpEntity);
             return pickUpEntity;
@@ -45,6 +55,16 @@ define([
                 this.pickUps.splice(i, 1);
             }
         },
+
+        despawnAllPickUps: function() {
+            var i = 0, n = this.pickUps.length;
+            for (; i < n; ++i) {
+                this.entities.remove(this.pickUps[i]);
+            }
+            this.pickUps.length = 0;
+            this.pickUpsToRemove.length = 0;
+        },
+
         update: function(entities, events, dt) {
             this.spawnTime -= dt;
             if (this.spawnTime < 0) {

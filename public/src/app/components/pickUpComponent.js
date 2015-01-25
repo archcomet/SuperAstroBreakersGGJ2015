@@ -8,6 +8,7 @@ define([
     var pickUpComponent = THREEComponent.extend('astro.pickUpComponent', {
 
         init: function(entity, options) {
+            this._super(entity, options);
             options = options || {};
 
             var geometry = new THREE.SphereGeometry(options.radius, 5, 5);
