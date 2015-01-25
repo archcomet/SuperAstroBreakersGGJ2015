@@ -80,6 +80,13 @@ define([
 
         'playerLife event': function (score) {
             this._lifeElement.textContent = score;
+        },
+        'menuSelection event' : function() {
+
+            if(this._header.style.display != 'block' )
+            {
+                this._events.emit('begin play');
+            }
         }
 
     });
