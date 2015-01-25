@@ -13,6 +13,7 @@ define([
         configure: function(entities, events, config) {
 
             this.entities = entities;
+            this.events = events;
 
             this.player1 = {
                 rotateRight: false,
@@ -45,11 +46,14 @@ define([
         },
 
         spawnPlayer: function() {
+            var radius = 100;
+
             this.playerShipEntity = this.entities.add('PlayerShip');
             this.ship = this.playerShipEntity.components.assign(PlayerShipComponent);
             this.position = this.playerShipEntity.components.assign(PositionComponent, {
-                radius: 150
+                radius: radius
             });
+            this.events.emit('Collision.Add', this.playerShipEntity, { radius: radius });
         },
 
         update: function(entities, events, dt) {
