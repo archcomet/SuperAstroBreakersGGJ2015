@@ -72,7 +72,7 @@ define([
             this.player1.fireTimer = 0;
             this.player2.fireTimer = 0;
             this.playerDied = false;
-            this.invincibility = 1000;
+            this.invincibility = 3000;
         },
 
         update: function(entities, events, dt) {
