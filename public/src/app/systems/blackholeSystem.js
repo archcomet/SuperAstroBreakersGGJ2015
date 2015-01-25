@@ -60,6 +60,7 @@ define([
         spawnBlackhole: function() {
 
             var v =this.cameraComponent.randomOffScreenPosition(this.blackholeConfig.radius);
+
             var a = cog.rand.arc4rand(0, 2 * Math.PI);
             var dx = Math.cos(a) * this.blackholeConfig.speed;
             var dy = Math.sin(a) * this.blackholeConfig.speed;

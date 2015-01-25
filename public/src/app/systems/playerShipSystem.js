@@ -1,11 +1,12 @@
 define([
     'cog',
+    'tween',
     'components/playerShipComponent',
     'components/positionComponent',
     'components/collisionComponent',
     'components/shieldComponent'
 
-], function(cog, PlayerShipComponent, PositionComponent, CollisionComponent, ShieldComponent) {
+], function(cog, Tween, PlayerShipComponent, PositionComponent, CollisionComponent, ShieldComponent) {
 
     var PlayerShipSystem = cog.System.extend('astro.PlayerShipSystem', {
 
