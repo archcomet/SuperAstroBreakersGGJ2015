@@ -8,5 +8,9 @@ define({
         maxAngularSpeed: 10,
         minSplitRadius: 100,
         radiusSpeedModifier: 50
+    },
+
+    bullets: {
+
     }
 });
