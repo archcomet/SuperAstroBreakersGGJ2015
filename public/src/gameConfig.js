@@ -59,7 +59,7 @@ define({
 
     bullets: {
         radius: 10,
-        speed: 2000,
+        speed: 3000,
         duration: 1000
     },
 
@@ -70,5 +70,10 @@ define({
 
     scene: {
         starCount: 3000
+    },
+
+    blackhole: {
+        radius: 300,
+        speed: 100
     }
 });

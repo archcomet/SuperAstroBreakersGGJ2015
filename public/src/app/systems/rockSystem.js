@@ -30,9 +30,6 @@ define([
             this.spawnRandomRock(400);
             this.spawnRandomRock(200);
             this.spawnRandomRock(200);
-            this.spawnRandomRock(100);
-            this.spawnRandomRock(50);
-            this.spawnRandomRock(50);
         },
 
         'end play event': function() {
@@ -40,9 +37,8 @@ define([
         },
 
         spawnRandomRock: function(radius) {
-            var x = cog.rand.arc4rand(-this.cameraComponent.visibleWidth/2, this.cameraComponent.visibleWidth/2),
-                y = cog.rand.arc4rand(-this.cameraComponent.visibleHeight/2, this.cameraComponent.visibleHeight/2);
-            this.spawnRock(radius, x, y);
+            var v = this.cameraComponent.randomOffScreenPosition(radius);
+            this.spawnRock(radius, v.x, v.y);
         },
 
         spawnRock: function(radius, x, y) {

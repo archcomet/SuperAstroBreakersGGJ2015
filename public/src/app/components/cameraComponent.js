@@ -28,6 +28,35 @@ define([
 
             this.visibleHeight = height;
             this.visibleWidth = width;
+        },
+
+        randomOffScreenPosition: function(radius) {
+
+            var x, y, edge = cog.rand.arc4randInt(0, 3);
+
+            switch (edge) {
+                case 0:
+                    x = cog.rand.arc4rand(0, this.visibleWidth) - this.visibleWidth /2;
+                    y = (this.visibleHeight /2) + radius - 1;
+                    break;
+                case 1:
+                    x = cog.rand.arc4rand(0, this.visibleWidth) - this.visibleWidth /2;
+                    y = -(this.visibleHeight /2) - radius + 1;
+                    break;
+                case 2:
+                    x = (this.visibleWidth/2) + radius - 1;
+                    y = cog.rand.arc4rand(0, this.visibleHeight) - this.visibleHeight /2;
+                    break;
+                case 3:
+                    x = -(this.visibleWidth/2) - radius + 1;
+                    y = cog.rand.arc4rand(0, this.visibleHeight) - this.visibleHeight /2;
+                    break;
+            }
+
+            return {
+                x: x,
+                y: y
+            }
         }
     });
 

@@ -19,8 +19,8 @@ define([
                 {
                     uniforms:
                     {
-                        "c":   { type: "f", value: 1.2 },
-                        "p":   { type: "f", value: 6 },
+                        "c":   { type: "f", value: 0.8 },
+                        "p":   { type: "f", value: 4.5 },
                         glowColor: { type: "c", value: new THREE.Color(0xff00ff) },
                         viewVector: { type: "v3", value: options.viewVector }
                     },
