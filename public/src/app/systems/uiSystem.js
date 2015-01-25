@@ -122,11 +122,17 @@ define([
             this._lifeElement.textContent = score;
         },
         'loadBomb event': function (bomb) {
-            this._bombElement.textContent = bomb;
-        },
+        this._bombElement.textContent = bomb;
+    },
 
         'decreseBombCount event': function (bomb) {
         this._bombElement.textContent -=  1 ;
+            if(this._bombElement.textContent >0) {
+                this._events.emit('bomb', {
+                    color: this.playerConfig.color2,
+                    position: this.position
+                });
+            }
     },
         'input event': function (player, name, pressed) {
             if (name === 'start' && pressed) {
