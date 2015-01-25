@@ -2,15 +2,17 @@ define([
     'cog',
     'components/rockComponent',
     'components/positionComponent',
-    'components/cameraComponent'
+    'components/cameraComponent',
+    'components/collisionComponent'
 
-], function(cog, RockComponent, PositionComponent, CameraComponent) {
+], function(cog, RockComponent, PositionComponent, CameraComponent, CollisionComponent) {
 
     var RockSystem = cog.System.extend('astro.RockSystem', {
 
         configure: function(entities, events, config) {
 
             this.entities = entities;
+            this.events = events;
             this.rocksConfig = config.rocks;
             this.cameraComponent = entities.withTag('camera')[0].components(CameraComponent);
             this.rocks = [];
@@ -47,6 +49,8 @@ define([
                 dry: cog.rand.arc4rand(-maxAngularSpeed, maxAngularSpeed),
                 drz: cog.rand.arc4rand(-maxAngularSpeed, maxAngularSpeed)
             });
+
+            rockEntity.components.assign(CollisionComponent);
 
             this.rocks.push(rockEntity);
             return rockEntity;
