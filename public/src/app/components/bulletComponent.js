@@ -13,7 +13,6 @@ define([
             var geometry = new THREE.SphereGeometry(options.radius);
             var material = new THREE.MeshBasicMaterial({ color: options.color });
             this.mesh = new THREE.Mesh(geometry, material);
-
             this.duration = options.duration;
         }
 
