@@ -32,6 +32,7 @@
         'systems/collisionSystem',
         'systems/rockSystem',
         'systems/playerShipSystem',
+        'systems/bulletSystem',
         'systems/uiSystem'
 
     ], function(cog,
@@ -44,6 +45,7 @@
                 CollisionSystem,
                 RockSystem,
                 PlayerShipSystem,
+                BulletSystem,
                 UISystem
         ) {
 
@@ -62,6 +64,7 @@
         game.systems.add(CollisionSystem);
         game.systems.add(RockSystem);
         game.systems.add(PlayerShipSystem);
+        game.systems.add(BulletSystem);
         game.systems.add(UISystem);
 
         game.onBeginStep(function() { stats.begin(); });

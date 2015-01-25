@@ -15,7 +15,6 @@ define([
 
             this._scoreElement = document.getElementById('scoreValue');
             this._lifeElement = document.getElementById('lifeValue');
-            this._intro = document.getElementById('intro');
 
             this._events = events;
 
@@ -35,38 +34,31 @@ define([
             this._header.style.display = 'none';
             this._end.style.display = 'none';
             this._webGLContainer.style.display = 'none';
-            this._intro.style.display = 'block';
         },
 
-        'screen game event': function() {
+        'begin play event': function() {
             this._menu.style.display = 'none';
             this._header.style.display = 'block';
             this._end.style.display = 'none';
             this._webGLContainer.style.display = 'block';
-            this._intro.style.display = 'none';
         },
 
-        'screen end event': function() {
+        'end play event': function() {
             this._menu.style.display = 'none';
             this._header.style.display = 'none';
             this._end.style.display = 'block';
             this._webGLContainer.style.display = 'none';
-            this._intro.style.display = 'none';
         },
 
         'playerScore event': function (score) {
             this._scoreElement.textContent = score;
-            console.log(score);
         },
 
         'playerLife event': function (score) {
             this._lifeElement.textContent = score;
-            console.log(score);
         }
 
     });
-
-
 
     astro.UISystem = UISystem;
 
