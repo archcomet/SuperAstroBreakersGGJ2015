@@ -11,6 +11,7 @@ define([
         configure: function(entities, events, config) {
 
             this.entities = entities;
+            this.events = events;
             this.rocksConfig = config.rocks;
             this.cameraComponent = entities.withTag('camera')[0].components(CameraComponent);
             this.rocks = [];
@@ -45,6 +46,8 @@ define([
                 dry: cog.rand.arc4rand(-maxAngularSpeed, maxAngularSpeed),
                 drz: cog.rand.arc4rand(-maxAngularSpeed, maxAngularSpeed)
             });
+
+            this.events.emit('Collision.Add', rockEntity, { radius: radius });
 
             this.rocks.push(rockEntity);
             return rockEntity;
