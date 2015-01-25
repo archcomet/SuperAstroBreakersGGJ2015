@@ -21,6 +21,9 @@ define([
             player1Mesh.rotation.z = Math.PI/2;
             player2Mesh.rotation.z = Math.PI/2;
 
+            player1Mesh.position.z = 20;
+            player2Mesh.position.z = -20;
+
             this.mesh = new THREE.Object3D();
             this.player1 = new THREE.Object3D();
             this.player2 = new THREE.Object3D();

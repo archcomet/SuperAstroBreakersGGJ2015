@@ -65,7 +65,7 @@ define({
 
     bullets: {
         radius: 10,
-        superRadius: 25,
+        superRadius: 50,
         speed: 3000,
         duration: 1000
     },
