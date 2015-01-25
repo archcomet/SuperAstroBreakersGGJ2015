@@ -10,13 +10,94 @@ define([
      *
      */
 
-    var InputSystem = cog.System.extend({
+    var InputSystem = cog.System.extend('astro.InputSystem', {
 
-        configure: function(entities, events) {
+
+        configure: function (entities, events) {
             this._events = events;
+            this._gamepadSupported = cog.isFunction(navigator.getGamepads) ? [] : null;
 
             document.addEventListener('keyup', this._handleKeyInput.bind(this), true);
             document.addEventListener('keydown', this._handleKeyInput.bind(this), true);
+
+            if (this._gamepadSupported) {
+                window.addEventListener('gamepadconnected', this._gamepadConnected.bind(this), true);
+                window.addEventListener('gamepaddisconnected', this._gamepadDisconnected.bind(this), true);
+            }
+
+            this._inputState = {
+                player1: {
+                    fire: false,
+                    forward: false,
+                    rotateRight: false,
+                    rotateLeft: false
+                },
+                player2: {
+                    fire: false,
+                    forward: false,
+                    rotateRight: false,
+                    rotateLeft: false
+                }
+            };
+        },
+
+        update: function () {
+            this._pollGamepads();
+        },
+
+        _pollGamepads: function () {
+            var i, n, pads, gamepad, player, playerState, padState;
+
+            if (!this._gamepadSupported) {
+                return;
+            }
+
+            pads = navigator.getGamepads();
+
+            for (i = 0, n = pads.length; i < n; ++i) {
+                gamepad = pads[i];
+
+                if (!gamepad || !gamepad.connected) {
+                    continue;
+                }
+
+                /*for(j=0,m=gamepad.buttons.length;j<m;++j) {
+                    console.log('button ' + j + ': ' + gamepad.buttons[j].pressed);
+                }*/
+
+                player = (gamepad.index % 2 === 0) ? 'player1' : 'player2';
+                playerState = (gamepad.index % 2 === 0) ? this._inputState[player] : this._inputState[player];
+                padState = this._getPadInputState(gamepad);
+
+                this._emitInputEventOnChange(playerState, padState, player, 'fire');
+                this._emitInputEventOnChange(playerState, padState, player, 'forward');
+                this._emitInputEventOnChange(playerState, padState, player, 'rotateRight');
+                this._emitInputEventOnChange(playerState, padState, player, 'rotateLeft');
+            }
+        },
+
+        _emitInputEventOnChange: function (playerState, padState, player, name) {
+            if (playerState[name] !== padState[name]) {
+                playerState[name] = padState[name];
+                this._events.emit('input', player, name, padState[name]);
+            }
+        },
+
+        _getPadInputState: function (gamepad) {
+            return {
+                fire: gamepad.buttons[14].pressed,
+                forward: gamepad.axes[1] < -0.5,
+                rotateRight: gamepad.axes[0] > 0.5,
+                rotateLeft: gamepad.axes[0] < -0.5
+            };
+        },
+
+        _gamepadConnected: function (event) {
+            console.log('connect gamepad ' + event.gamepad.index);
+        },
+
+        _gamepadDisconnected: function (event) {
+            console.log('disconnect gamepad ' + event.gamepad.index);
         },
 
         _handleKeyInput: function (event) {
