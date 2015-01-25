@@ -14,6 +14,10 @@ body, html {
 canvas {
     position: absolute;
 }
+#intro {
+    position:absolute;
+    display:none;
+}
 
 #menu {
     display: none;
@@ -43,4 +47,6 @@ canvas {
     left: 50%;
     display:none;
 }
+
+
 

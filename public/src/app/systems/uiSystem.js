@@ -12,7 +12,7 @@ define([
             this._header = document.getElementById('header');
             this._end = document.getElementById('end');
             this._webGLContainer = document.getElementById('webGLContainer');
-
+            this._intro = document.getElementById('intro');
         },
 
         gameTime: function() {
@@ -20,6 +20,7 @@ define([
             this._header.style.display = 'block';
             this._end.style.display = 'none';
             this._webGLContainer.style.display = 'block';
+            this._intro.style.display = 'none';
 
         },
         start : function () {
@@ -27,7 +28,7 @@ define([
             this._header.style.display = 'none';
             this._end.style.display = 'none';
             this._webGLContainer.style.display = 'none';
-
+            this._intro.style.display = 'block';
 
         },
         end :function() {
@@ -35,7 +36,7 @@ define([
             this._header.style.display = 'none';
             this._end.style.display = 'block';
             this._webGLContainer.style.display = 'none';
-
+            this._intro.style.display = 'none';
         },
         'screen start event': function() {
             this.start();
