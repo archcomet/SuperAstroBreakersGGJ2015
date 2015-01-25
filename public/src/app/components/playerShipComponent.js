@@ -38,8 +38,8 @@ define([
             var glowMaterial = new THREE.ShaderMaterial({
                 uniforms:
                 {
-                    "c":   { type: "f", value: 1 },
-                    "p":   { type: "f", value: 1 },
+                    "c":   { type: "f", value: 4 },
+                    "p":   { type: "f", value: 0.1 },
                     glowColor: { type: "c", value: new THREE.Color(0x0000ff) },
                     viewVector: { type: "v3", value: new THREE.Vector3(0, 0, 1) }
                 },
