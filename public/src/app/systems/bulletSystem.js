@@ -1,9 +1,10 @@
 define([
     'cog',
     'components/bulletComponent',
-    'components/positionComponent'
+    'components/positionComponent',
+    'components/collisionComponent'
 
-], function(cog, BulletComponent, PositionComponent) {
+], function(cog, BulletComponent, PositionComponent, CollisionComponent) {
 
     var BulletSystem = cog.System.extend('astro.BulletSystem', {
 
@@ -21,8 +22,6 @@ define([
                 i = 0,
                 n = this.bullets.length;
 
-            this.bulletsToRemove.length = 0;
-
             for (; i < n; ++i) {
                 bullet = this.bullets[i];
                 bulletComponent = bullet.components(BulletComponent);
@@ -34,7 +33,9 @@ define([
             }
 
             while(bullet = this.bulletsToRemove.pop()) {
-                this.despawnBullet(bullet);
+                if (bullet.valid) {
+                    this.despawnBullet(bullet);
+                }
             }
         },
 
@@ -63,7 +64,18 @@ define([
                 rz: angle
             });
 
+            bulletEntity.components.assign(CollisionComponent, {
+                startHandler: this.collisionHandler.bind(this)
+            });
+
             this.bullets.push(bulletEntity);
+        },
+
+        collisionHandler: function(bullet, other) {
+
+            if (other.tag === 'Rock') {
+                this.bulletsToRemove.push(bullet);
+            }
         },
 
         despawnBullet: function(bullet) {

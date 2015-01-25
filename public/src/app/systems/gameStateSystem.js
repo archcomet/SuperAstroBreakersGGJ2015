@@ -15,10 +15,9 @@ define([
             this._resetStats(config);
         },
 
-        'game start event': function () {
+        'begin play event': function () {
             this._resetStats();
             this._state = State.STARTED;
-            this._events.emit('begin play');
         },
 
         'player died event': function () {
@@ -40,7 +39,7 @@ define([
             }
         },
 
-        'game destroyedRock event': function () {
+        'rock destroyed event': function () {
             if (this._state !== State.STARTED) {
                 return;
             }
@@ -49,7 +48,7 @@ define([
             this._events.emit('playerScore', this._score);
         },
 
-        'game savedCivilian event': function () {
+        'civilian saved event': function () {
             if (this._state !== State.STARTED) {
                 return;
             }
@@ -58,7 +57,7 @@ define([
             this._events.emit('playerScore', this._score);
         },
 
-        'game lostCivilian event': function () {
+        'civilian lost event': function () {
             if (this._state !== State.STARTED) {
                 return;
             }
@@ -133,6 +132,7 @@ define([
 
             if (cnt < 1) {
                 document.body.removeChild(this._countDownElem);
+                // rename player spawn to player respawn
                 self._events.emit('player spawn');
                 // bust out of loop
                 return;
