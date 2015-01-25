@@ -40,7 +40,7 @@ define([
                     self._events.emit('muteAll');
                 }
 
-                this._updateMuteText(muted);
+                self._updateMuteText(muted);
 
             });
 
@@ -85,7 +85,7 @@ define([
             this._webGLContainer.style.display = 'none';
             this._intro.style.display = 'block';
 
-            this._events.emit('playSound', 'introMusic');
+            this._events.emit('playSound', 'introMusic', [1]);
         },
 
         'begin play event': function() {
@@ -95,8 +95,8 @@ define([
             this._webGLContainer.style.display = 'block';
             this._intro.style.display = 'none';
 
-            this._events.emit('stopSound', 'introMusic');
-            this._events.emit('playSound', 'worldMusic');
+            this._events.emit('stopSound', 'introMusic', [-2]);
+            this._events.emit('playSound', 'worldMusic', [2]);
 
         },
 
