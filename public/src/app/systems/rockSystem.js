@@ -14,7 +14,9 @@ define([
             this.rocksConfig = config.rocks;
             this.cameraComponent = entities.withTag('camera')[0].components(CameraComponent);
             this.rocks = [];
+        },
 
+        'begin play event': function() {
             this.spawnRock(400);
             this.spawnRock(200);
             this.spawnRock(200);
