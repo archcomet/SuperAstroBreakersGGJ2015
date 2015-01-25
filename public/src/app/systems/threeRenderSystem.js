@@ -18,7 +18,7 @@ define([
 
             this.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 15000);
             this.camera.position.x = 0;
-            this.camera.position.y = -500;
+            this.camera.position.y = 0;
             this.camera.position.z = 2000;
             this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
@@ -44,6 +44,7 @@ define([
                 entity._mesh.position.x = component.x;
                 entity._mesh.position.y = component.y;
                 entity._mesh.position.z = component.z;
+                entity._mesh.rotation.z = component.angle;
             }
         },
 
