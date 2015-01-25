@@ -30,9 +30,16 @@ define([
 
             this._events.emit('playerLife', this._playerLife);
 
+            this._events.emit('player destroy');
+
             if (this._playerLife <= 0) {
                 this._state = State.STOPPED;
                 this._events.emit('end play');
+            } else {
+                var self = this;
+                setTimeout(function () {
+                    self._events.emit('player spawn');
+                }, 2000);
             }
         },
 
