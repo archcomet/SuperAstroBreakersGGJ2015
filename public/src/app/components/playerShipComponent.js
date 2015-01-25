@@ -34,15 +34,15 @@ define([
             this.player1.add(player1Mesh);
             this.player2.add(player2Mesh);
 
-            var pointLight = new THREE.PointLight(0xffffaa, 1, 900);
+            var pointLight = new THREE.PointLight(0xffffaa, 2, 1000);
             this.mesh.add(pointLight);
 
             var glowGeometry = new THREE.SphereGeometry(100, 16, 16);
             var glowMaterial = new THREE.ShaderMaterial({
                 uniforms:
                 {
-                    "c":   { type: "f", value: 4 },
-                    "p":   { type: "f", value: 0.1 },
+                    "c":   { type: "f", value: 1 },
+                    "p":   { type: "f", value: 0.5 },
                     glowColor: { type: "c", value: new THREE.Color(0x0000ff) },
                     viewVector: { type: "v3", value: new THREE.Vector3(0, 0, 1) }
                 },
