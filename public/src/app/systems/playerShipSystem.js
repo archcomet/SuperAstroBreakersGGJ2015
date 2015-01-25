@@ -39,6 +39,14 @@ define([
             this.destroyPlayer();
         },
 
+        'player destroy event': function() {
+            this.destroyPlayer();
+        },
+
+        'player spawn event': function() {
+            this.spawnPlayer();
+        },
+
         collisionStartHandler: function(player, otherObject) {
             console.log('hit: ' + otherObject.tag);
         },
