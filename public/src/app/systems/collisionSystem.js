@@ -62,10 +62,6 @@ define([
             var collision = entity.components(CollisionComponent),
                 position = entity.components(PositionComponent);
 
-//            if (entity.components(PlayerShipComponent)) {
-                console.log(entity.tag, 'Pos: [', position.x, position.y, '] Col: [', collision.x, collision.y, ']');
-//            }
-
             collision.x = position.x/20;
             collision.y = position.y/20;
 
@@ -76,6 +72,8 @@ define([
         },
 
         createBody: function (collisionComponent, entity) {
+
+
             var shapeConfig             = collisionComponent.shapeConfig;
             var bodyDef                 = new b2BodyDef();
             bodyDef.type                = b2KinematicBody;
@@ -87,8 +85,7 @@ define([
             fixDef.density              = collisionComponent.density;
             fixDef.friction             = collisionComponent.friction;
             fixDef.restitution          = collisionComponent.restitution;
-            fixDef.shape                = new b2CircleShape();
-            fixDef.shape.SetRadius( shapeConfig.radius );
+            fixDef.shape                = new b2CircleShape(shapeConfig.radius);
 
             var body = this.world.CreateBody(bodyDef);
             body.CreateFixture(fixDef);
@@ -107,13 +104,9 @@ define([
             entity.components.remove(CollisionComponent);
         },
 
-        /**
+        /*
          * EVENTS
          */
-
-        'Collision.Hit event': function () {
-            console.log('hit!!!');
-        },
 
         'Collision.Add event': function (entity, shapeConfig) {
             if (entity.components(CollisionComponent)) {
