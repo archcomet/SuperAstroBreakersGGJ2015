@@ -2,9 +2,10 @@ define([
     'cog',
     'components/rockComponent',
     'components/positionComponent',
-    'components/cameraComponent'
+    'components/cameraComponent',
+    'components/collisionComponent'
 
-], function(cog, RockComponent, PositionComponent, CameraComponent) {
+], function(cog, RockComponent, PositionComponent, CameraComponent, CollisionComponent) {
 
     var RockSystem = cog.System.extend('astro.RockSystem', {
 
@@ -21,11 +22,11 @@ define([
 
         'begin play event': function() {
             this.spawnRock(400);
-//            this.spawnRock(200);
-//            this.spawnRock(200);
-//            this.spawnRock(100);
-//            this.spawnRock(50);
-//            this.spawnRock(50);
+            this.spawnRock(200);
+            this.spawnRock(200);
+            this.spawnRock(100);
+            this.spawnRock(50);
+            this.spawnRock(50);
         },
 
         spawnRock: function(radius) {
@@ -40,27 +41,19 @@ define([
 
             rockEntity.components.assign(PositionComponent, {
                 radius: radius,
-//                x:  cog.rand.arc4rand(-this.cameraComponent.visibleWidth/2, this.cameraComponent.visibleWidth/2),
-//                y:  cog.rand.arc4rand(-this.cameraComponent.visibleHeight/2, this.cameraComponent.visibleHeight/2),
-//                dx: cog.rand.arc4rand(-maxLinearSpeed, maxLinearSpeed),
-//                dy: cog.rand.arc4rand(-maxLinearSpeed, maxLinearSpeed),
+                x:  cog.rand.arc4rand(-this.cameraComponent.visibleWidth/2, this.cameraComponent.visibleWidth/2),
+                y:  cog.rand.arc4rand(-this.cameraComponent.visibleHeight/2, this.cameraComponent.visibleHeight/2),
+                dx: cog.rand.arc4rand(-maxLinearSpeed, maxLinearSpeed),
+                dy: cog.rand.arc4rand(-maxLinearSpeed, maxLinearSpeed),
                 drx: cog.rand.arc4rand(-maxAngularSpeed, maxAngularSpeed),
                 dry: cog.rand.arc4rand(-maxAngularSpeed, maxAngularSpeed),
                 drz: cog.rand.arc4rand(-maxAngularSpeed, maxAngularSpeed)
             });
 
-            this.events.emit('Collision.Add', rockEntity, { radius: radius });
+            rockEntity.components.assign(CollisionComponent);
 
             this.rocks.push(rockEntity);
             return rockEntity;
-        },
-
-        'Collision.ContactStart event': function (entity1, entity2) {
-            console.log('ContactStart!', entity1.tag, entity2.tag);
-        },
-
-        'Collision.ContactEnd event': function (entity1, entity2) {
-            console.log('ContactEnd!', entity1.tag, entity2.tag);
         },
 
         breakRock: function(rock) {

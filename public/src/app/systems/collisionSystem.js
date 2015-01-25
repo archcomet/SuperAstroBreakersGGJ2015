@@ -35,13 +35,31 @@ define([
                 var entity1 = contact.m_fixtureA.m_body.m_userData.entity,
                     entity2 = contact.m_fixtureB.m_body.m_userData.entity;
 
-                events.emit('Collision.ContactStart', entity1, entity2);
+                var handler1 = entity1.components(CollisionComponent).startHandler;
+                if (cog.isFunction(handler1)) {
+                    handler1(entity1, entity2);
+                }
+
+                var handler2 = entity2.components(CollisionComponent).startHandler;
+                if (cog.isFunction(handler2)) {
+                    handler2(entity2, entity1);
+                }
+
             };
             listener.EndContact     = function (contact) {
                 var entity1 = contact.m_fixtureA.m_body.m_userData.entity,
                     entity2 = contact.m_fixtureB.m_body.m_userData.entity;
 
-                events.emit('Collision.ContactEnd', entity1, entity2);
+                var handler1 = entity1.components(CollisionComponent).endHandler;
+                if (cog.isFunction(handler1)) {
+                    handler1(entity1, entity2);
+                }
+
+                var handler2 = entity2.components(CollisionComponent).endHandler;
+                if (cog.isFunction(handler2)) {
+                    handler2(entity2, entity1);
+                }
+
             };
             listener.PostSolve      = function (contact, impulse) {};
             listener.PreSolve       = function (contact, oldManifold) {};
@@ -84,11 +102,11 @@ define([
         },
 
         createBody: function (collisionComponent, entity) {
-            var shapeConfig             = collisionComponent.shapeConfig;
+            var position                = entity.components(PositionComponent);
             var bodyDef                 = new b2BodyDef();
             bodyDef.type                = b2DynamicBody;
             bodyDef.isSensor            = true;
-            bodyDef.position.Set(0, 0);
+            bodyDef.position.Set(position.x / METERS_TO_SPACE, position.y / METERS_TO_SPACE);
             bodyDef.userData = {
                 entity: entity
             };
@@ -99,41 +117,28 @@ define([
             fixDef.density              = collisionComponent.density;
             fixDef.friction             = collisionComponent.friction;
             fixDef.restitution          = collisionComponent.restitution;
-            fixDef.shape                = new b2CircleShape(shapeConfig.radius / METERS_TO_SPACE);
+            fixDef.shape                = new b2CircleShape(position.radius / METERS_TO_SPACE);
 
             var body = this.world.CreateBody(bodyDef);
             body.CreateFixture(fixDef);
 
-            return body;
+            collisionComponent.body = body;
         },
 
-        addCollision: function (entity, shapeConfig) {
-            var collision           = entity.components.assign(CollisionComponent);
-            collision.shapeConfig   = shapeConfig;
-            collision.body          = this.createBody(collision, entity);
-        },
-
-        removeCollision: function (entity) {
+        destroyBody: function (entity) {
             this.world.DestroyBody(entity.components(CollisionComponent).body);
-            entity.components.remove(CollisionComponent);
         },
 
         /*
          * EVENTS
          */
 
-        'Collision.Add event': function (entity, shapeConfig) {
-            if (entity.components(CollisionComponent)) {
-                this.removeCollision(entity);
-            }
-
-            this.addCollision(entity, shapeConfig);
+        'CollisionComponent assigned event': function(component, entity) {
+            this.createBody(component, entity);
         },
 
-        'Collision.Remove event': function (entity) {
-            if (entity.components(CollisionComponent)) {
-                this.removeCollision(entity);
-            }
+        'CollisionComponent removed event': function(component, entity) {
+            this.destroyBody(entity);
         },
 
         'Collision.Disable event': function () {

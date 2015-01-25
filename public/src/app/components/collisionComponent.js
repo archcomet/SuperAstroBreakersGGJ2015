@@ -3,11 +3,13 @@ define([
 ], function (cog) {
 
     var CollisionComponent = cog.Component.extend('astro-CollisionComponent', {
+        eventTarget: 'CollisionComponent'
+    },{
 
         defaults: {
             body: null,
-            shapeType: 'circle',
-            shapeConfig: null
+            startHandler: null,
+            endHandler: null
         },
 
         init: function (entity, options) {
@@ -19,6 +21,8 @@ define([
             this.restitution    = options.restitution || 0;
             this.categoryBits   = options.categoryBits || 0x0001;
             this.maskBits       = options.maskBits || 0xFFFF;
+            this.startHandler   = options.startHandler || null;
+            this.endHandler     = options.endHandler || null;
         }
 
     });
