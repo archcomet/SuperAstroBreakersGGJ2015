@@ -8,14 +8,13 @@ define([
     var BulletComponent = THREEComponent.extend('astro.BulletComponent', {
 
         init: function(entity, options) {
-            options = options || {};
+            this._super(entity, options);
 
-            var geometry = new THREE.SphereGeometry(10, 5, 5);
-            var material = new THREE.MeshBasicMaterial({
-                color: 0xffffff
-            });
-
+            var geometry = new THREE.SphereGeometry(options.radius);
+            var material = new THREE.MeshBasicMaterial({ color: options.color });
             this.mesh = new THREE.Mesh(geometry, material);
+
+            this.duration = options.duration;
         }
 
     });

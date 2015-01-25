@@ -19,6 +19,8 @@ define({
     },
 
     bullets: {
-
+        radius: 10,
+        speed: 2000,
+        duration: 1000
     }
 });
