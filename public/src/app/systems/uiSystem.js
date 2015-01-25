@@ -22,11 +22,11 @@ define([
 
             var self = this;
 
-            document.getElementById("start").addEventListener("click", function () {
-                self._events.emit('game start');
+            document.getElementById("start").addEventListener("click", function() {
+                self._events.emit('begin play');
             });
             document.getElementById("replay").addEventListener("click", function() {
-                self._events.emit('game start');
+                self._events.emit('begin play');
             });
 
             this.startScreenTween();

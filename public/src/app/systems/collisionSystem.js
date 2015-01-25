@@ -44,23 +44,8 @@ define([
                 if (cog.isFunction(handler2)) {
                     handler2(entity2, entity1);
                 }
-
             };
-            listener.EndContact     = function (contact) {
-                var entity1 = contact.m_fixtureA.m_body.m_userData.entity,
-                    entity2 = contact.m_fixtureB.m_body.m_userData.entity;
 
-                var handler1 = entity1.components(CollisionComponent).endHandler;
-                if (cog.isFunction(handler1)) {
-                    handler1(entity1, entity2);
-                }
-
-                var handler2 = entity2.components(CollisionComponent).endHandler;
-                if (cog.isFunction(handler2)) {
-                    handler2(entity2, entity1);
-                }
-
-            };
             listener.PostSolve      = function (contact, impulse) {};
             listener.PreSolve       = function (contact, oldManifold) {};
             this.world.SetContactListener(listener);
@@ -71,11 +56,12 @@ define([
                 i, n = entityList.length;
 
             if (this.collisionEnabled) {
-                this.updateWorld();
 
                 for (i = 0; i < n; ++i) {
                     this.updateBodyPosition(entityList[i]);
                 }
+
+                this.updateWorld();
             }
         },
 
@@ -125,8 +111,8 @@ define([
             collisionComponent.body = body;
         },
 
-        destroyBody: function (entity) {
-            this.world.DestroyBody(entity.components(CollisionComponent).body);
+        destroyBody: function (component) {
+            this.world.DestroyBody(component.body);
         },
 
         /*
@@ -138,7 +124,7 @@ define([
         },
 
         'CollisionComponent removed event': function(component, entity) {
-            this.destroyBody(entity);
+            this.destroyBody(component);
         },
 
         'Collision.Disable event': function () {

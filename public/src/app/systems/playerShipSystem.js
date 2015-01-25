@@ -2,9 +2,10 @@ define([
     'cog',
     'components/playerShipComponent',
     'components/positionComponent',
-    'components/collisionComponent'
+    'components/collisionComponent',
+    'components/shieldComponent'
 
-], function(cog, PlayerShipComponent, PositionComponent, CollisionComponent) {
+], function(cog, PlayerShipComponent, PositionComponent, CollisionComponent, ShieldComponent) {
 
     var PlayerShipSystem = cog.System.extend('astro.PlayerShipSystem', {
 
@@ -29,18 +30,14 @@ define([
                 fire: false,
                 fireTimer: 0
             };
+
+            this.playerDied = false;
+            this.invincibility = 1000;
+            this.shield = null;
         },
 
         'begin play event': function() {
             this.spawnPlayer();
-        },
-
-        'end play event': function() {
-            this.destroyPlayer();
-        },
-
-        'player destroy event': function() {
-            this.destroyPlayer();
         },
 
         'player spawn event': function() {
@@ -48,13 +45,16 @@ define([
         },
 
         collisionStartHandler: function(player, otherObject) {
-            console.log('hit: ' + otherObject.tag);
+            if (otherObject.tag === 'Rock' && this.invincibility <= 0) {
+                this.playerDied = true;
+            }
         },
 
         destroyPlayer: function() {
             if (this.playerShipEntity) {
                 this.entities.remove(this.playerShipEntity);
                 this.playerShipEntity = null;
+                this.events.emit('player died');
             }
         },
 
@@ -71,9 +71,15 @@ define([
 
             this.player1.fireTimer = 0;
             this.player2.fireTimer = 0;
+            this.playerDied = false;
+            this.invincibility = 1000;
         },
 
         update: function(entities, events, dt) {
+
+            if (this.playerDied) {
+                this.destroyPlayer();
+            }
 
             if (!this.playerShipEntity) {
                 return;
@@ -81,6 +87,15 @@ define([
 
             this.player1.fireTimer -= dt;
             this.player2.fireTimer -= dt;
+            this.invincibility -= dt;
+
+            if (this.invincibility && !this.shield) {
+                this.spawnShield();
+            }
+
+            if (this.invincibility <= 0 && this.shield) {
+                this.despawnShield();
+            }
 
             var da1 = 0,
                 da2 = 0,
@@ -119,6 +134,12 @@ define([
             this.position.dx += ax;
             this.position.dy += ay;
 
+            if (this.shield) {
+                var shieldPos = this.shield.components(PositionComponent);
+                shieldPos.dx += ax;
+                shieldPos.dy += ay;
+            }
+
             if (this.player1.fire && this.player1.fireTimer <= 0) {
                 this.player1.fireTimer = 1000 / this.playerConfig.rateOfFire;
                 this.events.emit('fire', {
@@ -140,6 +161,29 @@ define([
 
         'input event': function (player, action, state) {
             this[player][action] = state;
+        },
+
+        spawnShield: function(x, y) {
+
+            if (this.shield) {
+                return;
+            }
+
+            var shieldEntity = this.entities.add('Shield');
+
+            shieldEntity.components.assign(ShieldComponent, {});
+
+            shieldEntity.components.assign(PositionComponent, {
+                x: x,
+                y: y
+            });
+
+            this.shield = shieldEntity;
+        },
+
+        despawnShield: function() {
+            this.entities.remove(this.shield);
+            this.shield = null;
         }
 
     });
