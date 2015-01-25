@@ -31,7 +31,8 @@
         'systems/positionSystem',
         'systems/collisionSystem',
         'systems/rockSystem',
-        'systems/playerShipSystem'
+        'systems/playerShipSystem',
+        'systems/uiSystem'
 
     ], function(cog,
                 gameConfig,
@@ -42,7 +43,8 @@
                 PositionSystem,
                 CollisionSystem,
                 RockSystem,
-                PlayerShipSystem
+                PlayerShipSystem,
+                UISystem
         ) {
 
         var stats = new Stats();
@@ -60,11 +62,13 @@
         game.systems.add(CollisionSystem);
         game.systems.add(RockSystem);
         game.systems.add(PlayerShipSystem);
+        game.systems.add(UISystem);
 
         game.onBeginStep(function() { stats.begin(); });
         game.onEndStep(function() { stats.end(); });
         game.start();
 
+        game.events.emit('screen start');
         astro.game = game;
     });
 
