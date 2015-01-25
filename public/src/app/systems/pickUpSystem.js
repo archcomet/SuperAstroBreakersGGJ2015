@@ -2,15 +2,17 @@ define([
     'cog',
     'components/pickUpComponent',
     'components/positionComponent',
-    'components/cameraComponent'
+    'components/cameraComponent',
+    'components/collisionComponent'
 
-], function(cog, PickUpComponent, PositionComponent, CameraComponent) {
+], function(cog, PickUpComponent, PositionComponent, CameraComponent, CollisionComponent) {
 
     var PickUpSystem = cog.System.extend('astro.PickUpSystem', {
 
         configure: function(entities, events, config) {
 
-            this.entities = entities;
+            this.entities   = entities;
+            this.events     = events;
             this.pickUpConfig = config.pickUps;
             this.cameraComponent = entities.withTag('camera')[0].components(CameraComponent);
             this.spawnTime = this.pickUpConfig.spawnTime;
@@ -44,9 +46,24 @@ define([
                 x: x,
                 y: y
             });
+            pickUpEntity.components.assign(CollisionComponent, {
+                startHandler: this.collisionHandler.bind(this)
+            });
+
             this.pickUps.push(pickUpEntity);
             return pickUpEntity;
         },
+
+        collisionHandler: function (pickup, other) {
+            var pickUpComponent = pickup.components(PickUpComponent);
+            if (other.tag === 'PlayerShip') {
+                pickUpComponent.duration = 0;
+                this.events.emit('Player.Pickup', pickUpComponent.color.name);
+            } else if (other.tag === 'Blackhole') {
+                pickUpComponent.duration = 0;
+            }
+        },
+
         despawnPickUp: function(pickUp) {
             this.entities.remove(pickUp);
 
@@ -93,6 +110,7 @@ define([
             }
         }
     });
+
     astro.PickUpSystem = PickUpSystem;
 
     return PickUpSystem;

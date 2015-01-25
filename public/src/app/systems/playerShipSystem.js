@@ -45,6 +45,12 @@ define([
             this.spawnPlayer();
         },
 
+        'Player.Pickup event': function (color) {
+            if (color.toLowerCase() === 'blue') {
+                this.invincibility  = 3000;
+            }
+        },
+
         collisionStartHandler: function(player, otherObject) {
             if (otherObject.tag === 'Rock' && this.invincibility <= 0) {
                 this.playerDied = true;
@@ -99,12 +105,11 @@ define([
             this.player2.fireTimer -= dt;
             this.invincibility -= dt;
 
-            if (this.invincibility > 0) {
+            if (this.invincibility > 0 && !this.ship.glow.visible) {
+                this.ship.glow.visible = true;
+            } else if (this.invincibility <= 0 && this.ship.glow.visible) {
+                this.ship.glow.visible = false;
             }
-            else {
-
-            }
-
 
             var da1 = 0,
                 da2 = 0,
