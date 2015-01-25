@@ -30,13 +30,17 @@ define([
                     fire: false,
                     forward: false,
                     rotateRight: false,
-                    rotateLeft: false
+                    rotateLeft: false,
+                    select: false,
+                    start: false
                 },
                 player2: {
                     fire: false,
                     forward: false,
                     rotateRight: false,
-                    rotateLeft: false
+                    rotateLeft: false,
+                    select: false,
+                    start: false
                 }
             };
         },
@@ -73,6 +77,8 @@ define([
                 this._emitInputEventOnChange(playerState, padState, player, 'forward');
                 this._emitInputEventOnChange(playerState, padState, player, 'rotateRight');
                 this._emitInputEventOnChange(playerState, padState, player, 'rotateLeft');
+                this._emitInputEventOnChange(playerState, padState, player, 'select');
+                this._emitInputEventOnChange(playerState, padState, player, 'start');
             }
         },
 
@@ -81,13 +87,6 @@ define([
                 playerState[name] = padState[name];
                 this._events.emit('input', player, name, padState[name]);
             }
-
-            if(name == 'fire' && padState[name])
-            {
-                this._events.emit('menuSelection');
-            }
-
-
         },
 
         _getPadInputState: function (gamepad) {
@@ -95,7 +94,9 @@ define([
                 fire: gamepad.buttons[0].pressed,
                 forward: gamepad.axes[1] < -0.5,
                 rotateRight: gamepad.axes[0] > 0.5,
-                rotateLeft: gamepad.axes[0] < -0.5
+                rotateLeft: gamepad.axes[0] < -0.5,
+                select: gamepad.buttons[8].pressed,
+                start: gamepad.buttons[9].pressed
             };
         },
 
