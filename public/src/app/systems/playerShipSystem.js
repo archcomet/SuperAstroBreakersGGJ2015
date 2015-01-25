@@ -1,9 +1,10 @@
 define([
     'cog',
     'components/playerShipComponent',
-    'components/positionComponent'
+    'components/positionComponent',
+    'components/collisionComponent'
 
-], function(cog, PlayerShipComponent, PositionComponent) {
+], function(cog, PlayerShipComponent, PositionComponent, CollisionComponent) {
 
     var PlayerShipSystem = cog.System.extend('astro.PlayerShipSystem', {
 
@@ -46,6 +47,10 @@ define([
             this.spawnPlayer();
         },
 
+        collisionStartHandler: function(player, otherObject) {
+            console.log('hit: ' + otherObject.tag);
+        },
+
         destroyPlayer: function() {
             if (this.playerShipEntity) {
                 this.entities.remove(this.playerShipEntity);
@@ -57,8 +62,13 @@ define([
             this.playerShipEntity = this.entities.add('PlayerShip');
             this.ship = this.playerShipEntity.components.assign(PlayerShipComponent);
             this.position = this.playerShipEntity.components.assign(PositionComponent, {
-                radius: 150
+                radius: 75
             });
+
+            this.playerShipEntity.components.assign(CollisionComponent, {
+                startHandler: this.collisionStartHandler.bind(this)
+            });
+
             this.player1.fireTimer = 0;
             this.player2.fireTimer = 0;
         },
