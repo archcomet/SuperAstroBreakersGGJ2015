@@ -53,12 +53,14 @@ define([
             config = config || {};
             this._state = State.STOPPED;
             this._playerLife = config.playerLife || 5;
+            this._bombCount = config.player.bombCount || 5;
             this._score = config.score || 0;
             this._rockBonus = config.rockBonus || 10;
             this._countdownFinalText = 'What Do We Do Now?';
 
             this._events.emit('playerScore', this._score);
             this._events.emit('playerLife', this._playerLife);
+            this._events.emit('loadBomb', this._bombCount);
         },
 
         _setNagText: function (life) {

@@ -17,6 +17,7 @@ define([
 
             this._scoreElement = document.getElementById('scoreValue');
             this._lifeElement = document.getElementById('lifeValue');
+            this._bombElement = document.getElementById('bombValue');
 
             this._events = events;
             this._tweenTime = 2500;
@@ -117,7 +118,13 @@ define([
         'playerLife event': function (score) {
             this._lifeElement.textContent = score;
         },
+        'loadBomb event': function (bomb) {
+            this._bombElement.textContent = bomb;
+        },
 
+        'decreseBombCount event': function (bomb) {
+        this._bombElement.textContent -=  1 ;
+    },
         'input event': function (player, name, pressed) {
             if (name === 'start' && pressed) {
                 if(this._header.style.display != 'block' )

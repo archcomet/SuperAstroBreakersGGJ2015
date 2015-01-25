@@ -199,6 +199,7 @@ define([
                     color: this.playerConfig.color1,
                     position: this.position
                 });
+                this.events.emit('decreseBombCount');
                 this.player1.bomb = false;
                 this.bombCount--;
             }
