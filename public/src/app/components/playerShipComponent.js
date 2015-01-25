@@ -10,15 +10,103 @@ define([
         init: function(entity, options) {
             this._super(entity, options);
 
-            var geometry = new THREE.CylinderGeometry(0, 50, 100, 3, 1, false);
+            var geometry = new THREE.Geometry();
+            geometry.vertices.push(
+
+                //Flat
+
+                new THREE.Vector3( 0, 30, 0 ),
+                new THREE.Vector3( 30, 0, 0 ),
+                new THREE.Vector3( 0, 0, 0 ),
+
+                new THREE.Vector3( 0, 30, 0 ),
+                new THREE.Vector3( -30, 0, 0 ),
+                new THREE.Vector3( 0, 0, 0 ),
+
+                new THREE.Vector3( 0, 0, 0 ),
+                new THREE.Vector3( 0, -70,0 ),
+                new THREE.Vector3( 30, 0, 0 ),
+
+                new THREE.Vector3( 0, 0, 0 ),
+                new THREE.Vector3( 0, -70,0 ),
+                new THREE.Vector3( -30, 0, 0 ),
+
+                // z + 10
+
+                new THREE.Vector3( 0, 30, 0 ),
+                new THREE.Vector3( 30, 0, 0 ),
+                new THREE.Vector3( 0, 0, 10 ),
+
+                new THREE.Vector3( 0, 30, 0 ),
+                new THREE.Vector3( -30, 0, 0 ),
+                new THREE.Vector3( 0, 0, 10 ),
+
+                new THREE.Vector3( 0, 0, 10 ),
+                new THREE.Vector3( 0, -70,0 ),
+                new THREE.Vector3( 30, 0, 0 ),
+
+                new THREE.Vector3( 0, 0, 10 ),
+                new THREE.Vector3( 0, -70,0 ),
+                new THREE.Vector3( -30, 0, 0 ),
+
+                // z - 10
+
+                new THREE.Vector3( 0, 30, 0 ),
+                new THREE.Vector3( 30, 0, 0 ),
+                new THREE.Vector3( 0, 0, -10 ),
+
+                new THREE.Vector3( 0, 30, 0 ),
+                new THREE.Vector3( -30, 0, 0 ),
+                new THREE.Vector3( 0, 0, -10 ),
+
+                new THREE.Vector3( 0, 0, -10 ),
+                new THREE.Vector3( 0, -70,0 ),
+                new THREE.Vector3( 30, 0, 0 ),
+
+                new THREE.Vector3( 0, 0, -10 ),
+                new THREE.Vector3( 0, -70,0 ),
+                new THREE.Vector3( -30, 0, 0 )
+
+
+            );
+
+            geometry.faces.push( new THREE.Face3( 0,2,1 ) );
+
+            geometry.faces.push( new THREE.Face3( 0,4,2 ) );
+
+            geometry.faces.push( new THREE.Face3( 2,7,1 ) );
+
+            geometry.faces.push( new THREE.Face3( 7,2,4 ) );
+
+
+            geometry.faces.push( new THREE.Face3( 0,14,1 ) );
+
+            geometry.faces.push( new THREE.Face3( 0,4,14 ) );
+
+            geometry.faces.push( new THREE.Face3( 14,7,1 ) );
+
+            geometry.faces.push( new THREE.Face3( 7,14,4 ) );
+
+
+            geometry.faces.push( new THREE.Face3( 0,26,1 ) );
+
+            geometry.faces.push( new THREE.Face3( 0,4,26 ) );
+
+            geometry.faces.push( new THREE.Face3( 26,7,1 ) );
+
+            geometry.faces.push( new THREE.Face3( 7,26,4 ) );
+
+            geometry.computeBoundingSphere();
+
+
             var material1 = new THREE.MeshBasicMaterial( {color: 0xffff00, opacity: 0.5, transparent: true} );
             var material2 = new THREE.MeshBasicMaterial( {color: 0x00ffff, opacity: 0.5, transparent: true} );
 
             var player1Mesh = new THREE.Mesh(geometry, material1);
             var player2Mesh = new THREE.Mesh(geometry, material2);
-
-            player1Mesh.rotation.z = -Math.PI/2;
-            player2Mesh.rotation.z = -Math.PI/2;
+            //
+            player1Mesh.rotation.z = Math.PI/2;
+            player2Mesh.rotation.z = Math.PI/2;
 
             this.mesh = new THREE.Object3D();
             this.player1 = new THREE.Object3D();
