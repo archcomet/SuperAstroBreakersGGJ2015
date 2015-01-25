@@ -18,6 +18,7 @@ define([
             this._scoreElement = document.getElementById('scoreValue');
             this._lifeElement = document.getElementById('lifeValue');
             this._bombElement = document.getElementById('bombValue');
+            this._finalScoreElement = document.getElementById('finalScoreValue');
 
             this._events = events;
             this._tweenTime = 2500;
@@ -100,12 +101,14 @@ define([
 
         },
 
-        'end play event': function() {
+        'end play event': function(score) {
             this._menu.style.display = 'none';
             this._header.style.display = 'none';
             this._end.style.display = 'block';
             this._webGLContainer.style.display = 'none';
             this._intro.style.display = 'none';
+
+            this._finalScoreElement.textContent = score;
 
             this._events.emit('stopSound', 'worldMusic');
             this._events.emit('playSound', 'endMusic');

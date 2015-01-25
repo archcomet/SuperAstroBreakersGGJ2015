@@ -34,7 +34,7 @@ define([
 
             if (this._playerLife <= 0) {
                 this._state = State.STOPPED;
-                this._events.emit('end play');
+                this._events.emit('end play', this._score);
             } else {
                 this._readySteadyGo();
             }
