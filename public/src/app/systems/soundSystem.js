@@ -302,7 +302,7 @@
             //console.log(this.origSounds[name]);
 
             //Bail out!
-            if (typeof this.origSounds[name] === "undefinedd") return
+            if (typeof this.origSounds[name] === "undefinedd" || this.origSounds[name] == null) return
 
             if ( typeof gain === "undefined") {
                 if (typeof this.origSounds[name].gain === "undefined")
@@ -397,6 +397,12 @@
         'fire event': function () {
 
             this._playSound('shotStd');
+
+        },
+
+        'bomb event': function () {
+
+            this._playSound('bomb');
 
         },
 

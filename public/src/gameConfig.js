@@ -16,10 +16,10 @@ define({
 
         //https://abstractionmusic.bandcamp.com/album/three-red-hearts
         //Out of Time
-        {fileName:'sfx/IntroMusic.mp3', name:'introMusic', loop:true, gain:.5},
+        {fileName:'sfx/IntroMusic.mp3', name:'introMusic', loop:true, gain:.4},
         //https://abstractionmusic.bandcamp.com/album/three-red-hearts
         //Princess Quest
-        {fileName:'sfx/WorldMusic.mp3', name:'worldMusic', gain:.5, loop:true},
+        {fileName:'sfx/WorldMusic.mp3', name:'worldMusic', gain:.4, loop:true},
         /*
             ::This must be preset in game::
             Acquired From - freesound.org
@@ -30,7 +30,7 @@ define({
          */
         {fileName:'sfx/ShotStd.mp3', name:'shotStd'},
         //0common
-        {fileName:'sfx/BigWeapon.mp3', name:'shotAOE'},
+        {fileName:'sfx/BigWeapon.mp3', name:'bomb'},
         //0common
         {fileName:'sfx/Thrust.mp3', name:'thrust', gain:.75, loop:true},
         //0common
@@ -44,7 +44,7 @@ define({
         //0common
         {fileName:'sfx/PickUp.mp3', name:'powerUp', gain:1.25},
         //0common
-        {fileName:'sfx/Explode.mp3', name:'explode'},
+        {fileName:'sfx/Explode.mp3', name:'explode', gain:1.5},
         /*
              ::This must be preset in game::
              Acquired From - freesound.org

@@ -126,6 +126,7 @@ define([
             if (!rock.valid) {
                 return;
             }
+            this.events.emit("playSound","chain", .5)
             var positionComponent = rock.components(PositionComponent);
             if (positionComponent.radius > this.rocksConfig.minSplitRadius) {
                 var i = 0, n = this.rocksConfig.rockSplitCount;

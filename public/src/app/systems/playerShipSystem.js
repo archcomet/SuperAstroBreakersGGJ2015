@@ -61,10 +61,14 @@ define([
         collisionStartHandler: function(player, otherObject) {
             if (otherObject.tag === 'Rock' && this.invincibility <= 0) {
                 this.playerDied = true;
+                this.events.emit('explode');
+
             }
 
             if (otherObject.tag === 'Blackhole') {
                 this.playerDied = true;
+                this.events.emit('playSound', 'blackHole')
+
             }
         },
 
@@ -74,7 +78,6 @@ define([
                 this.playerShipEntity = null;
                 this.events.emit('player died');
                 this.events.emit('stopSound', 'thrust');
-                this.events.emit('explode');
 
             }
         },
