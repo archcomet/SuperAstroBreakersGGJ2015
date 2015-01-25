@@ -17,6 +17,7 @@ define([
 
             this._scoreElement = document.getElementById('scoreValue');
             this._lifeElement = document.getElementById('lifeValue');
+            this._bombElement = document.getElementById('bombValue');
 
             this._events = events;
 
@@ -105,6 +106,13 @@ define([
         'playerLife event': function (score) {
             this._lifeElement.textContent = score;
         },
+        'bomb event': function (bomb) {
+            this._bombElement.textContent = bomb;
+        },
+
+        'bombFire event': function (bomb) {
+        this._bombElement.textContent -=  1 ;
+    },
         'menuSelection event' : function() {
 
             if(this._header.style.display != 'block' )

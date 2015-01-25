@@ -72,6 +72,7 @@ define([
             config = config || {};
             this._state = State.STOPPED;
             this._playerLife = config.playerLife || 5;
+            this._bombCount = config.bomb || 5;
             this._score = config.score || 0;
             this._rockBonus = config.rockBonus || Math.E;
             this._civilianSavedBonus = config.civilianSavedBonus || Math.PI;
@@ -80,6 +81,7 @@ define([
 
             this._events.emit('playerScore', this._score);
             this._events.emit('playerLife', this._playerLife);
+            this._events.emit('bomb', this._bombCount);
         },
 
         _setNagText: function (life) {
