@@ -10,6 +10,7 @@ define([
         configure: function(entities, events, config) {
 
             this.entities = entities;
+            this.events = events;
             this.xMax = config.bounds.xMax;
             this.yMax = config.bounds.yMax;
 
@@ -37,6 +38,8 @@ define([
                 dx: cog.rand.arc4rand(-this.rockSpeedMax, this.rockSpeedMax),
                 dy: cog.rand.arc4rand(-this.rockSpeedMax, this.rockSpeedMax)
             });
+
+            this.events.emit('Collision.Add', rockEntity, 'circle', { radius: 200 });
 
             return rockEntity;
         }

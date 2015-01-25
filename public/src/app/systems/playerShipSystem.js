@@ -13,6 +13,7 @@ define([
         configure: function(entities, events, config) {
 
             this.entities = entities;
+            this.events = events;
             this.spawnPlayer();
 
             this.player1 = {
@@ -34,6 +35,8 @@ define([
             this.playerShipEntity = this.entities.add('PlayerShip');
             this.ship = this.playerShipEntity.components.assign(PlayerShipComponent);
             this.position = this.playerShipEntity.components.assign(PositionComponent);
+
+            this.events.emit('Collision.Add', this.playerShipEntity, 'polygon', { isBox: true, width: 1, height: 1 });
         },
 
         update: function(entities, events, dt) {
