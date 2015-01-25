@@ -14,6 +14,7 @@ define([
             this.events = events;
             this.entities = entities;
             this.playerConfig = config.player;
+            this.pickupConfig = config.pickUps;
 
             this.player1 = {
                 rotateRight: false,
@@ -52,7 +53,7 @@ define([
 
         'Player.Pickup event': function (color) {
             if (color.toLowerCase() === 'blue') {
-                this.invincibility  = 3000;
+                this.invincibility  = this.pickupConfig.invincibility;
             }
         },
 
