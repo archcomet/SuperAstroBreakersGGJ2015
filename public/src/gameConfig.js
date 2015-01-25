@@ -24,8 +24,13 @@ define({
         speed: 2000,
         duration: 1000
     },
+
     pickUps: {
         spawnTime: 10000,
         duration: 11000
+    },
+
+    scene: {
+        starCount: 2500
     }
 });
