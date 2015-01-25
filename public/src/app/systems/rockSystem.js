@@ -22,15 +22,16 @@ define([
         },
 
         update: function(entities, events, dt) {
-            var rock, radius;
+            var rock;
             while(rock = this.rocksToDestroy.pop()) {
                 this.breakRock(rock);
             }
 
-            if (--this.spawnNext < 0) {
-                radius  = math.randomNumber(400, 50);
-                this.spawnRandomRock(radius);
-                this.spawnNext = this.rocks.length * 100;
+
+            this.spawnNext -= dt;
+            if (this.spawnNext < 0) {
+                this.spawnRandomRock(400);
+                this.spawnNext = 5000;
             }
         },
 
