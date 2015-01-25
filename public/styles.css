@@ -58,10 +58,17 @@ canvas {
     transform: translate(-50%, -50%);
 }
 
+.Title {
+    font-size: 60px;
+    text-align: center;
+    color: red;
+}
 #options {
     position: absolute;
     right: 10%;
     z-index: 2;
 }
 
-
+.Instructions {
+    position: relative;
+}

@@ -19,6 +19,7 @@ define([
             this._lifeElement = document.getElementById('lifeValue');
 
             this._events = events;
+            this._tweenTime = 2500;
             this._muted = false;
 
             var self = this;
@@ -54,17 +55,26 @@ define([
         },
 
         startScreenTween: function () {
-            var message = document.getElementById('intro'),
-                position = { x: 0, y: 0 };
+            var intro = document.querySelector('.Intro'),
+                rotation = { r:-Math.PI/4 };
 
-            var tween = new Tween.Tween( position )
-                .to( { x: 0, y: 75 }, 1500)
-                .easing( Tween.Easing.Sinusoidal.Out)
-                .onUpdate( function () {
-                    message.style.transform = 'translateY(' + position.y + 'px)';
+            var tweenLeft = new Tween.Tween( rotation )
+                .to( { r:Math.PI/4 }, this._tweenTime)
+                .easing ( Tween.Easing.Elastic.InOut )
+                .onUpdate ( function () {
+                    intro.style.transform = 'rotateX(' + rotation.r + 'rad)';
                 });
 
-            tween.start();
+            var tweenRight = new Tween.Tween( rotation )
+                .to( { r:-Math.PI/4 }, this._tweenTime)
+                .easing ( Tween.Easing.Elastic.InOut )
+                .onUpdate ( function () {
+                intro.style.transform = 'rotateX(' + rotation.r + 'rad)';
+                })
+                .chain(tweenLeft);
+
+            tweenLeft.chain(tweenRight);
+            tweenLeft.start();
         },
 
         'screen start event': function() {
