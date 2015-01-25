@@ -7,13 +7,14 @@ define([
 
     var RockComponent = THREEComponent.extend('astro.RockComponent', {
 
-        init: function(options) {
+        init: function(entity, options) {
             options = options || {};
 
-            this.radius = options.radius || 300;
-
-            var geometry = new THREE.SphereGeometry(this.radius);
-            var material = new THREE.MeshBasicMaterial( {color: 0xff00ff } );
+            var geometry = new THREE.SphereGeometry(options.radius, 5, 5);
+            var material = new THREE.MeshPhongMaterial({
+                color: 0xff00ff,
+                emissive: 0x110033
+            });
 
             this.mesh = new THREE.Mesh(geometry, material);
         }

@@ -27,6 +27,9 @@ define([
 
             this.player1.add(player1Mesh);
             this.player2.add(player2Mesh);
+
+            var pointLight = new THREE.PointLight(0xffffaa, 1, 900);
+            this.mesh.add(pointLight);
         }
 
     });
