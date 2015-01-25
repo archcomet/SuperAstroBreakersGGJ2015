@@ -49,6 +49,10 @@ define([
 
         collisionStartHandler: function(player, otherObject) {
             console.log('hit: ' + otherObject.tag);
+
+            if (otherObject.tag === 'Rock') {
+                this.events.emit('game rockCollision');
+            }
         },
 
         destroyPlayer: function() {
