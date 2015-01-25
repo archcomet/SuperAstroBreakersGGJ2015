@@ -50,7 +50,7 @@ define({
     ],
 
     rocks: {
-        maxLinearSpeed: 700,
+        maxLinearSpeed: 1000,
         maxAngularSpeed: 10,
         minSplitRadius: 50,
         radiusSpeedModifier: 50,
@@ -70,5 +70,6 @@ define({
 
     scene: {
         starCount: 3000
-    }
+    },
+    rockBonus: 10
 });
