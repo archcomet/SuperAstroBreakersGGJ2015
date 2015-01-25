@@ -34,8 +34,8 @@ define([
             this.scene = new THREE.Scene();
             this.container.appendChild(this.renderer.domElement);
 
-            var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
-                directionalLight.position.set( 1, 2, 0 );
+            var directionalLight = new THREE.DirectionalLight( 0xffffaa, 0.5 );
+                directionalLight.position.set( 1, 2, 0.5 );
 
             this.scene.add( directionalLight );
 

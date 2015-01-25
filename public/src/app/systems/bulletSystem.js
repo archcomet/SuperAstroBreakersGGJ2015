@@ -80,6 +80,10 @@ define([
             if (other.tag === 'Rock') {
                 this.bulletsToRemove.push(bullet);
             }
+
+            if (other.tag === 'Blackhole') {
+                this.bulletsToRemove.push(bullet);
+            }
         },
 
         despawnBullet: function(bullet) {

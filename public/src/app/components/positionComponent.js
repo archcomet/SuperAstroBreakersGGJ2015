@@ -13,9 +13,9 @@ define([
             this.y = options.y || 0;
             this.z = options.z || 0;
 
-            this.rx = options.x || 0;
-            this.ry = options.y || 0;
-            this.rz = options.z || 0;
+            this.rx = options.rx || 0;
+            this.ry = options.ry || 0;
+            this.rz = options.rz || 0;
 
             this.dx = options.dx || 0;
             this.dy = options.dy || 0;

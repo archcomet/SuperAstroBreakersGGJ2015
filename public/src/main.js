@@ -33,6 +33,7 @@
         'systems/positionSystem',
         'systems/collisionSystem',
         'systems/rockSystem',
+        'systems/blackholeSystem',
         'systems/playerShipSystem',
         'systems/soundSystem',
         'systems/bulletSystem',
@@ -48,6 +49,7 @@
                 PositionSystem,
                 CollisionSystem,
                 RockSystem,
+                BlackholeSystem,
                 PlayerShipSystem,
                 SoundSystem,
                 BulletSystem,
@@ -69,6 +71,7 @@
         game.systems.add(GameStateSystem);
         game.systems.add(PositionSystem);
         game.systems.add(CollisionSystem);
+        game.systems.add(BlackholeSystem);
         game.systems.add(RockSystem);
         game.systems.add(PlayerShipSystem);
         game.systems.add(BulletSystem);
