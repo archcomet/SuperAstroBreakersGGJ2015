@@ -81,6 +81,13 @@ define([
                 playerState[name] = padState[name];
                 this._events.emit('input', player, name, padState[name]);
             }
+
+            if(name == 'fire' && padState[name])
+            {
+                this._events.emit('menuSelection');
+            }
+
+
         },
 
         _getPadInputState: function (gamepad) {
