@@ -36,9 +36,7 @@ define([
         },
 
         'end play event': function() {
-            while(this.rocks.length > 0) {
-                this.despawnRock(this.rocks[0]);
-            }
+            this.despawnAllRocks();
         },
 
         spawnRandomRock: function(radius) {
@@ -92,6 +90,16 @@ define([
             var index = this.rocks.indexOf(rock);
             this.rocks.splice(index, 1);
             this.entities.remove(rock);
+        },
+
+        despawnAllRocks: function() {
+            var i = 0, n = this.rocks.length;
+            for (; i < n; ++i) {
+
+                this.entities.remove(this.rocks[i]);
+            }
+            this.rocks.length = 0;
+            this.rocksToDestroy.length = 0;
         },
 
         collisionHandler: function(rock, otherEntity) {

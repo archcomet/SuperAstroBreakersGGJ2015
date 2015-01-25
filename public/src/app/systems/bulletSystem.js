@@ -16,6 +16,10 @@ define([
             this.bulletsToRemove = [];
         },
 
+        'end play event': function() {
+            this.despawnAllBullets();
+        },
+
         update: function(entities, events, dt) {
 
             var bullet, bulletComponent,
@@ -85,6 +89,15 @@ define([
             if (i > -1) {
                 this.bullets.splice(i, 1);
             }
+        },
+
+        despawnAllBullets: function() {
+            var i = 0, n = this.bullets.length;
+            for (; i < n; ++i) {
+                this.entities.remove(this.bullets[i]);
+            }
+            this.bullets.length = 0;
+            this.bulletsToRemove.length = 0;
         },
 
         'fire event': function(options) {
