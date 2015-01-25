@@ -28,16 +28,17 @@ define([
             });
 
             document.getElementById("toggleMute").addEventListener("click", function() {
-                var elm = document.getElementById("toggleMute");
-                if (elm.textContent.indexOf("not") == -1)
+                var elm = document.getElementById("toggleMute"),
+                    muted = elm.textContent.indexOf("not") == -1;
+                if (muted)
                 {
                     self._events.emit('unMuteAll');
-                    elm.textContent = "Is not Muted."
                 }
                 else{
                     self._events.emit('muteAll');
-                    elm.textContent = "Is Muted.";
                 }
+
+                this._updateMuteText(muted);
 
             });
 
@@ -117,6 +118,8 @@ define([
             }
 
             if (name === 'select' && pressed) {
+                this._updateMuteText(this._muted);
+
                 if (this._muted) {
                     this._muted = false;
                     this._events.emit('unMuteAll');
@@ -124,6 +127,17 @@ define([
                     this._muted = true;
                     this._events.emit('muteAll');
                 }
+            }
+        },
+
+        _updateMuteText: function (muted) {
+            var elm = document.getElementById("toggleMute");
+            if (muted)
+            {
+                elm.textContent = "Is not Muted."
+            }
+            else{
+                elm.textContent = "Is Muted.";
             }
         }
 
