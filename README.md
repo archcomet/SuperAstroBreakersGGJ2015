@@ -50,3 +50,10 @@ Credits:
 * Alex Tong - _Maybe I need to pull first?_ -
 * John La Rosa - _Gotta beat our 4800 score!_ -
 * Chris Perryea -
+
+
+Acknowledgements:
+-----------
+* Music: abstractionmusic.com
+* freesound.org | ani_music | http://creativecommons.org/licenses/by/3.0/ | copyright: http://sbassdrum.com
+* freesound.org | Setuniman
