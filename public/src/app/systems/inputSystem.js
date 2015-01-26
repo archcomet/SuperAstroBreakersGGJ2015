@@ -94,13 +94,13 @@ define([
 
         _getPadInputState: function (gamepad) {
             return {
-                fire: gamepad.buttons[0].pressed,
-                forward: gamepad.axes[1] < -0.5,
+                fire: (gamepad.buttons[0].pressed || gamepad.buttons[7].pressed),
+                forward: (gamepad.axes[1] < -0.5 || gamepad.buttons[2].pressed || gamepad.buttons[6].pressed),
                 rotateRight: gamepad.axes[0] > 0.5,
                 rotateLeft: gamepad.axes[0] < -0.5,
                 select: gamepad.buttons[8].pressed,
                 start: gamepad.buttons[9].pressed,
-                bomb: gamepad.buttons[1].pressed
+                bomb: (gamepad.buttons[1].pressed || gamepad.buttons[5].pressed)
             };
         },
 

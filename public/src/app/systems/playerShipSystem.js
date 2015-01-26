@@ -65,7 +65,7 @@ define([
 
             }
 
-            if (otherObject.tag === 'Blackhole') {
+            if (otherObject.tag === 'Blackhole'  && this.invincibility <= 0) {
                 this.playerDied = true;
                 this.events.emit('playSound', 'blackHole')
 
@@ -86,7 +86,7 @@ define([
             this.playerShipEntity = this.entities.add('PlayerShip');
             this.ship = this.playerShipEntity.components.assign(PlayerShipComponent);
             this.position = this.playerShipEntity.components.assign(PositionComponent, {
-                radius: 75,
+                radius: 25,
                 x: 0,
                 y: 0
             });
