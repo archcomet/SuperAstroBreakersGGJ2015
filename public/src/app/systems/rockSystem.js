@@ -27,11 +27,13 @@ define([
                 this.breakRock(rock);
             }
 
-
-            this.spawnNext -= dt;
-            if (this.spawnNext < 0) {
-                this.spawnRandomRock(400);
-                this.spawnNext = 6000;
+            if (this.started) {
+                this.spawnNext -= dt;
+                if (this.spawnNext < 0) {
+                    this.spawnRandomRock(400);
+                    this.spawnRandomRock(400);
+                    this.spawnNext = 6000;
+                }
             }
         },
 
@@ -39,10 +41,12 @@ define([
             this.spawnRandomRock(400);
             this.spawnRandomRock(200);
             this.spawnRandomRock(200);
+            this.started = true;
         },
 
         'end play event': function() {
             this.despawnAllRocks();
+            this.started = false;
         },
 
         spawnRandomRock: function(radius) {
