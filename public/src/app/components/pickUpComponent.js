@@ -33,6 +33,12 @@ define([
             this.ring2.add(this.ring3);
 
             this.duration = options.duration;
+
+
+            var pointLight = new THREE.PointLight(0x0000ff, 5, 700);
+            this.mesh.add(pointLight);
+
+
         }
 
 
