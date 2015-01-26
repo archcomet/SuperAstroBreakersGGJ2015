@@ -6,7 +6,7 @@ define({
     player: {
         bombCount: 3,
         bombRateOffFire: 0.75,
-        rateOfFire: 10,
+        rateOfFire: 15,
         angularVelocity: 7,
         linearAcceleration: 20,
         color1: 0xffff00,
@@ -30,7 +30,7 @@ define({
          */
         {fileName:'sfx/ShotStd.mp3', name:'shotStd'},
         //0common
-        {fileName:'sfx/BigWeapon.mp3', name:'bomb'},
+        {fileName:'sfx/BigWeapon.mp3', name:'bomb', gain: 3},
         //0common
         {fileName:'sfx/Thrust.mp3', name:'thrust', gain:.75, loop:true},
         //0common

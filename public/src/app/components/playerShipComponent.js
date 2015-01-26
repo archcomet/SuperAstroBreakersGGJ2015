@@ -34,7 +34,7 @@ define([
             this.player1.add(player1Mesh);
             this.player2.add(player2Mesh);
 
-            var pointLight = new THREE.PointLight(0xffffaa, 2, 1000);
+            var pointLight = new THREE.PointLight(0xffffaa, 2, 1500);
             this.mesh.add(pointLight);
 
             var glowGeometry = new THREE.SphereGeometry(100, 16, 16);

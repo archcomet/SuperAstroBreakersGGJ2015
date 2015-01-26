@@ -19,7 +19,7 @@ define([
                 {
                     uniforms:
                     {
-                        "c":   { type: "f", value: 0.72 },
+                        "c":   { type: "f", value: 0.9 },
                         "p":   { type: "f", value: 4.7 },
                         glowColor: { type: "c", value: new THREE.Color(0xff00ff) },
                         viewVector: { type: "v3", value: options.viewVector }
@@ -37,6 +37,10 @@ define([
             this.mesh = new THREE.Object3D();
             this.mesh.add(blackhole);
             this.mesh.add(glow);
+
+            var pointLight = new THREE.PointLight(0xff00ff, 5, 1000);
+            this.mesh.add(pointLight);
+
         }
 
     });
